@@ -105,12 +105,9 @@ const Right = 4
 func listenToKey(key *hotkey.Hotkey, input chan uint8, done chan bool) {
 	for {
 		<-key.Keydown()
-		// byte, _ := hex.DecodeString(key.String())
 		hexKeyVal, _ := strconv.Atoi(key.String())
 
 		log.Printf("[Listener] Pressed: %x", hexKeyVal)
-		// log.Printf("Pressed: %d", uint(hotkey.KeyUp))
-		// log.Printf("Pressed: %x", hotkey.KeyUp)
 
 		if hexKeyVal == int(hotkey.KeyUp) {
 			input <- Up
@@ -154,28 +151,14 @@ func getFn(done chan bool, keyboardInput chan uint8) func() {
 		go listenToKey(keyLeft, keyboardInput, done)
 		go listenToKey(keyClose, keyboardInput, done)
 
-		// for {
-		// 	<-hk.Keydown()
-		// 	log.Printf("hotkey: %v is registered\n", hk)
-		// 	done <- true
-		// 	break
-		// }
-		// log.Printf("hotkey: %v is down\n", hk)
-		// <-hk.Keyup()
-		// log.Printf("hotkey: %v is up\n", hk)
 		for {
 			<-done
 			log.Print("Unregistering all listeners")
-
+			keyUp.Unregister()
+			keyDown.Unregister()
+			keyLeft.Unregister()
+			keyRight.Unregister()
+			keyClose.Unregister()
 		}
-
-		// go func() {
-		// 	keyUp.Unregister()
-		// 	keyDown.Unregister()
-		// 	keyLeft.Unregister()
-		// 	keyRight.Unregister()
-		// 	keyClose.Unregister()
-		// }()
-		// log.Printf("hotkey: %v is unregistered\n", hk)
 	}
 }
