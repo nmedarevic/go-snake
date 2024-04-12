@@ -77,13 +77,15 @@ func main() {
 
 	go func() {
 		for {
-			select {
-			case <-done:
-				fmt.Println("Done!")
-				return
-			case input := <-keyboardInput:
-				fmt.Println("Key pressed:", input)
-			}
+			<-done
+			fmt.Println("Done!")
+		}
+	}()
+
+	go func() {
+		for {
+			input := <-keyboardInput
+			fmt.Println("Key pressed:", input)
 		}
 	}()
 
