@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"strconv"
 	"time"
 
 	"golang.design/x/hotkey"
@@ -72,6 +73,7 @@ func f(from string) {
 func main() {
 	ticker := time.NewTicker(500 * time.Millisecond)
 	done := make(chan bool, 1)
+	keyboardInput := make(chan uint8, 10)
 
 	go func() {
 		for {
@@ -79,34 +81,101 @@ func main() {
 			case <-done:
 				fmt.Println("Done!")
 				return
-			case t := <-ticker.C:
-				fmt.Println("Tick at", t)
+			case input := <-keyboardInput:
+				fmt.Println("Key pressed:", input)
 			}
 		}
 	}()
-	// go f("goroutine")
-	mainthread.Init(getFn(done))
-} // Not necessary when use in Fyne, Ebiten or Gio.
 
-func getFn(done chan bool) func() {
-	return func() {
-		hk := hotkey.New([]hotkey.Modifier{}, hotkey.KeyS)
-		err := hk.Register()
-
-		if err != nil {
-			log.Fatalf("hotkey: failed to register hotkey: %v", err)
-		}
-
+	go func() {
 		for {
-			<-hk.Keydown()
-			log.Printf("hotkey: %v is registered\n", hk)
-			done <- true
-			break
+			t := <-ticker.C
+			fmt.Println("Tick at", t)
 		}
+	}()
+
+	mainthread.Init(getFn(done, keyboardInput))
+}
+
+const Up = 1
+const Down = 2
+const Left = 3
+const Right = 4
+
+func listenToKey(key *hotkey.Hotkey, input chan uint8, done chan bool) {
+	for {
+		<-key.Keydown()
+		// byte, _ := hex.DecodeString(key.String())
+		hexKeyVal, _ := strconv.Atoi(key.String())
+
+		log.Printf("[Listener] Pressed: %x", hexKeyVal)
+		// log.Printf("Pressed: %d", uint(hotkey.KeyUp))
+		// log.Printf("Pressed: %x", hotkey.KeyUp)
+
+		if hexKeyVal == int(hotkey.KeyUp) {
+			input <- Up
+		}
+		if hexKeyVal == int(hotkey.KeyDown) {
+			input <- Down
+		}
+		if hexKeyVal == int(hotkey.KeyLeft) {
+			input <- Left
+		}
+		if hexKeyVal == int(hotkey.KeyRight) {
+			input <- Right
+		}
+		if key.String() == "X" {
+			done <- true
+		}
+	}
+}
+
+func getFn(done chan bool, keyboardInput chan uint8) func() {
+	return func() {
+		keyUp := hotkey.New([]hotkey.Modifier{}, hotkey.KeyUp)
+		keyDown := hotkey.New([]hotkey.Modifier{}, hotkey.KeyDown)
+		keyLeft := hotkey.New([]hotkey.Modifier{}, hotkey.KeyLeft)
+		keyRight := hotkey.New([]hotkey.Modifier{}, hotkey.KeyRight)
+		keyClose := hotkey.New([]hotkey.Modifier{}, hotkey.KeyX)
+
+		err1 := keyUp.Register()
+		err2 := keyDown.Register()
+		err3 := keyLeft.Register()
+		err4 := keyRight.Register()
+		err5 := keyClose.Register()
+
+		if err1 != nil && err2 != nil && err3 != nil && err4 != nil && err5 != nil {
+			log.Fatalf("hotkey: failed to register hotkey")
+		}
+
+		go listenToKey(keyUp, keyboardInput, done)
+		go listenToKey(keyDown, keyboardInput, done)
+		go listenToKey(keyRight, keyboardInput, done)
+		go listenToKey(keyLeft, keyboardInput, done)
+		go listenToKey(keyClose, keyboardInput, done)
+
+		// for {
+		// 	<-hk.Keydown()
+		// 	log.Printf("hotkey: %v is registered\n", hk)
+		// 	done <- true
+		// 	break
+		// }
 		// log.Printf("hotkey: %v is down\n", hk)
 		// <-hk.Keyup()
 		// log.Printf("hotkey: %v is up\n", hk)
-		hk.Unregister()
+		for {
+			<-done
+			log.Print("Unregistering all listeners")
+
+		}
+
+		// go func() {
+		// 	keyUp.Unregister()
+		// 	keyDown.Unregister()
+		// 	keyLeft.Unregister()
+		// 	keyRight.Unregister()
+		// 	keyClose.Unregister()
+		// }()
 		// log.Printf("hotkey: %v is unregistered\n", hk)
 	}
 }
