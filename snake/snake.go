@@ -16,11 +16,11 @@ const Down = 2
 const Left = 3
 const Right = 4
 
-func MakeSnake() *Snake {
-	snakeBody := make([]SnakePoint, 3)
-	snakeBody[0] = SnakePoint{X: uint8(3), Y: uint8(5)}
-	snakeBody[1] = SnakePoint{X: uint8(3), Y: uint8(4)}
-	snakeBody[2] = SnakePoint{X: uint8(3), Y: uint8(3)}
+func MakeSnake(x uint8, y uint8, length uint8) *Snake {
+	snakeBody := make([]SnakePoint, length)
+	snakeBody[0] = SnakePoint{X: uint8(x), Y: uint8(y)}
+	snakeBody[1] = SnakePoint{X: uint8(x), Y: uint8(y - 1)}
+	snakeBody[2] = SnakePoint{X: uint8(x), Y: uint8(y - 2)}
 
 	snake := Snake{
 		Body: &snakeBody,
