@@ -79,13 +79,18 @@ func MoveHead(snake *Snake, field *[][]uint8, direction uint8) {
 }
 
 func MoveBody(snake *Snake, field *[][]uint8, direction uint8) {
-	// Moves the body
 	for i := 1; i < len(*snake.Body); i++ {
 		fmt.Println(i, "Curr", (*snake.Body)[i])
 		fmt.Println(i-1, "Prev", (*snake.Body)[i-1])
 
-		// Cell before moved right down
+		// Cell in front moved right down
 		if (*snake.Body)[i].X+1 == (*snake.Body)[i-1].X && (*snake.Body)[i].Y+1 == (*snake.Body)[i-1].Y {
+			(*snake.Body)[i].Y = (*snake.Body)[i].Y + 1
+			continue
+		}
+
+		// Cell in front moved down left
+		if (*snake.Body)[i].X-1 == (*snake.Body)[i-1].X && (*snake.Body)[i].Y+1 == (*snake.Body)[i-1].Y {
 			(*snake.Body)[i].Y = (*snake.Body)[i].Y + 1
 			continue
 		}
@@ -97,7 +102,7 @@ func MoveBody(snake *Snake, field *[][]uint8, direction uint8) {
 		// 	continue
 		// }
 
-		// Cell before moved down
+		// Cell in front moved down
 		if (*snake.Body)[i].X == (*snake.Body)[i-1].X && (*snake.Body)[i].Y+2 == (*snake.Body)[i-1].Y {
 			(*snake.Body)[i].Y = (*snake.Body)[i].Y + 1
 			continue
@@ -119,15 +124,11 @@ func PrintTable(table *[][]uint8, snake *Snake) {
 			(*table)[y][x] = uint8(0)
 			for index, s := range *snake.Body {
 				if uint8(x) == s.X && uint8(y) == s.Y {
-					// (*table)[y][x] = uint8(1)
-
 					if index == 0 {
-						// (*table)[y][x] = uint8(2)
-
-						fmt.Print("S")
+						fmt.Print("H")
 						continue
 					}
-					fmt.Print("N")
+					fmt.Print("T")
 				}
 			}
 			fmt.Print(" ")
