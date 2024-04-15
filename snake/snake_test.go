@@ -48,3 +48,16 @@ func TestShouldMoveHeadBottomLeft(t *testing.T) {
 	Move(snake, &table, Left)
 	PrintTable(&table, snake)
 }
+
+func TestShouldMoveHeadTopLeft(t *testing.T) {
+	snake := MakeSnakeHeadPointUp(3, 5, 3)
+
+	table := make([][]uint8, 10)
+	for i := range table {
+		table[i] = make([]uint8, 10)
+	}
+
+	PrintTable(&table, snake)
+	Move(snake, &table, Left)
+	PrintTable(&table, snake)
+}

@@ -29,6 +29,19 @@ func MakeSnake(x uint8, y uint8, length uint8) *Snake {
 	return &snake
 }
 
+func MakeSnakeHeadPointUp(x uint8, y uint8, length uint8) *Snake {
+	snakeBody := make([]SnakePoint, length)
+	snakeBody[0] = SnakePoint{X: uint8(x), Y: uint8(y)}
+	snakeBody[1] = SnakePoint{X: uint8(x), Y: uint8(y + 1)}
+	snakeBody[2] = SnakePoint{X: uint8(x), Y: uint8(y + 2)}
+
+	snake := Snake{
+		Body: &snakeBody,
+	}
+
+	return &snake
+}
+
 func MoveHead(snake *Snake, field *[][]uint8, direction uint8) {
 	var changedX bool = false
 	var changedY bool = false
@@ -38,25 +51,21 @@ func MoveHead(snake *Snake, field *[][]uint8, direction uint8) {
 	if direction == Down {
 		nextPositionY = (*snake.Body)[0].Y + 1
 		changedY = true
-		// (*snake.Body)[0].Y = (*snake.Body)[0].Y + 1
 	}
 
 	if direction == Up {
 		nextPositionY = (*snake.Body)[0].Y - 1
 		changedY = true
-		// (*snake.Body)[0].Y = (*snake.Body)[0].Y - 1
 	}
 
 	if direction == Left {
 		nextPositionX = (*snake.Body)[0].X - 1
 		changedX = true
-		// (*snake.Body)[0].X = (*snake.Body)[0].X + 1
 	}
 
 	if direction == Right {
 		nextPositionX = (*snake.Body)[0].X + 1
 		changedX = true
-		// (*snake.Body)[0].X = (*snake.Body)[0].X - 1
 	}
 
 	// Move the head only if it does not overlap with the second item
@@ -95,12 +104,17 @@ func MoveBody(snake *Snake, field *[][]uint8, direction uint8) {
 			continue
 		}
 
-		// Cell before moved up
-		// if (*snake.Body)[i].X+1 == (*snake.Body)[i-1].X && (*snake.Body)[i].Y != (*snake.Body)[i-1].Y {
-		// 	(*snake.Body)[i].X = (*snake.Body)[i].X + 1
-		// 	fmt.Print("BBBB")
-		// 	continue
-		// }
+		// Cell in front moved top left
+		if (*snake.Body)[i].X-1 == (*snake.Body)[i-1].X && (*snake.Body)[i].Y-1 == (*snake.Body)[i-1].Y {
+			(*snake.Body)[i].Y = (*snake.Body)[i].Y - 1
+			continue
+		}
+
+		// Cell in front moved up
+		if (*snake.Body)[i].X == (*snake.Body)[i-1].X && (*snake.Body)[i].Y-2 == (*snake.Body)[i-1].Y {
+			(*snake.Body)[i].Y = (*snake.Body)[i].Y - 1
+			continue
+		}
 
 		// Cell in front moved down
 		if (*snake.Body)[i].X == (*snake.Body)[i-1].X && (*snake.Body)[i].Y+2 == (*snake.Body)[i-1].Y {
@@ -125,13 +139,27 @@ func PrintTable(table *[][]uint8, snake *Snake) {
 			for index, s := range *snake.Body {
 				if uint8(x) == s.X && uint8(y) == s.Y {
 					if index == 0 {
-						fmt.Print("H")
+						(*table)[y][x] = uint8(1)
 						continue
 					}
-					fmt.Print("T")
+					(*table)[y][x] = uint8(2)
+					continue
 				}
 			}
-			fmt.Print(" ")
+		}
+	}
+
+	for y := range *table {
+		for x := range (*table)[y] {
+			if (*table)[y][x] == 1 {
+				fmt.Print("H")
+				continue
+			}
+			if (*table)[y][x] == 2 {
+				fmt.Print("B")
+				continue
+			}
+			fmt.Print("_")
 		}
 		fmt.Println()
 	}
