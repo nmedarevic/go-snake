@@ -48,13 +48,13 @@ func MoveHead(snake *Snake, field *[][]uint8, direction uint8) {
 	}
 
 	if direction == Left {
-		nextPositionX = (*snake.Body)[0].X + 1
+		nextPositionX = (*snake.Body)[0].X - 1
 		changedX = true
 		// (*snake.Body)[0].X = (*snake.Body)[0].X + 1
 	}
 
 	if direction == Right {
-		nextPositionX = (*snake.Body)[0].X - 1
+		nextPositionX = (*snake.Body)[0].X + 1
 		changedX = true
 		// (*snake.Body)[0].X = (*snake.Body)[0].X - 1
 	}
@@ -78,28 +78,38 @@ func MoveHead(snake *Snake, field *[][]uint8, direction uint8) {
 	}
 }
 
-func Move(snake *Snake, field *[][]uint8, direction uint8) {
-	MoveHead(snake, field, direction)
-
+func MoveBody(snake *Snake, field *[][]uint8, direction uint8) {
 	// Moves the body
 	for i := 1; i < len(*snake.Body); i++ {
 		fmt.Println(i, "Curr", (*snake.Body)[i])
 		fmt.Println(i-1, "Prev", (*snake.Body)[i-1])
 
-		// When the head is going up from heading horizontally
-		if (*snake.Body)[i].X+1 == (*snake.Body)[i-1].X && (*snake.Body)[i].Y != (*snake.Body)[i-1].Y {
-			(*snake.Body)[i].X = (*snake.Body)[i].X + 1
-
+		// Cell before moved right down
+		if (*snake.Body)[i].X+1 == (*snake.Body)[i-1].X && (*snake.Body)[i].Y+1 == (*snake.Body)[i-1].Y {
+			(*snake.Body)[i].Y = (*snake.Body)[i].Y + 1
 			continue
 		}
 
-		// Moving down
+		// Cell before moved up
+		// if (*snake.Body)[i].X+1 == (*snake.Body)[i-1].X && (*snake.Body)[i].Y != (*snake.Body)[i-1].Y {
+		// 	(*snake.Body)[i].X = (*snake.Body)[i].X + 1
+		// 	fmt.Print("BBBB")
+		// 	continue
+		// }
+
+		// Cell before moved down
 		if (*snake.Body)[i].X == (*snake.Body)[i-1].X && (*snake.Body)[i].Y+2 == (*snake.Body)[i-1].Y {
 			(*snake.Body)[i].Y = (*snake.Body)[i].Y + 1
-
 			continue
 		}
+
 	}
+}
+
+func Move(snake *Snake, field *[][]uint8, direction uint8) {
+	MoveHead(snake, field, direction)
+
+	MoveBody(snake, field, direction)
 }
 
 func PrintTable(table *[][]uint8, snake *Snake) {
