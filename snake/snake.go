@@ -89,8 +89,32 @@ func MoveHead(snake *Snake, field *[][]uint8, direction uint8) {
 
 func MoveBody(snake *Snake, field *[][]uint8, direction uint8) {
 	for i := 1; i < len(*snake.Body); i++ {
-		fmt.Println(i, "Curr", (*snake.Body)[i])
-		fmt.Println(i-1, "Prev", (*snake.Body)[i-1])
+		// fmt.Println(i, "Curr", (*snake.Body)[i])
+		// fmt.Println(i-1, "Prev", (*snake.Body)[i-1])
+
+		// Cell in front moved right
+		if (*snake.Body)[i].X+2 == (*snake.Body)[i-1].X && (*snake.Body)[i].Y == (*snake.Body)[i-1].Y {
+			(*snake.Body)[i].X = (*snake.Body)[i].X + 1
+			continue
+		}
+
+		// Cell in front moved left
+		if (*snake.Body)[i].X-2 == (*snake.Body)[i-1].X && (*snake.Body)[i].Y == (*snake.Body)[i-1].Y {
+			(*snake.Body)[i].X = (*snake.Body)[i].X - 1
+			continue
+		}
+
+		// Cell on the left hand side moved up
+		if i+1 == len(*snake.Body)-1 && (*snake.Body)[i].X-1 == (*snake.Body)[i-1].X && (*snake.Body)[i].Y-1 == (*snake.Body)[i-1].Y && (*snake.Body)[i].X+1 == (*snake.Body)[i+1].X {
+			(*snake.Body)[i].X = (*snake.Body)[i].X - 1
+			continue
+		}
+
+		// Cell moved up but next one is horizontal
+		if i+1 == len(*snake.Body)-1 && (*snake.Body)[i].X == (*snake.Body)[i-1].X && (*snake.Body)[i].Y-2 == (*snake.Body)[i-1].Y && (*snake.Body)[i].X+1 == (*snake.Body)[i+1].X {
+			(*snake.Body)[i].Y = (*snake.Body)[i].Y - 1
+			continue
+		}
 
 		// Cell in front moved right down
 		if (*snake.Body)[i].X+1 == (*snake.Body)[i-1].X && (*snake.Body)[i].Y+1 == (*snake.Body)[i-1].Y {
@@ -104,8 +128,20 @@ func MoveBody(snake *Snake, field *[][]uint8, direction uint8) {
 			continue
 		}
 
+		// Cell in front moved down
+		if (*snake.Body)[i].X == (*snake.Body)[i-1].X && (*snake.Body)[i].Y+2 == (*snake.Body)[i-1].Y {
+			(*snake.Body)[i].Y = (*snake.Body)[i].Y + 1
+			continue
+		}
+
 		// Cell in front moved top left
 		if (*snake.Body)[i].X-1 == (*snake.Body)[i-1].X && (*snake.Body)[i].Y-1 == (*snake.Body)[i-1].Y {
+			(*snake.Body)[i].Y = (*snake.Body)[i].Y - 1
+			continue
+		}
+
+		// Cell in front moved top right
+		if (*snake.Body)[i].X+1 == (*snake.Body)[i-1].X && (*snake.Body)[i].Y-1 == (*snake.Body)[i-1].Y {
 			(*snake.Body)[i].Y = (*snake.Body)[i].Y - 1
 			continue
 		}
@@ -115,13 +151,6 @@ func MoveBody(snake *Snake, field *[][]uint8, direction uint8) {
 			(*snake.Body)[i].Y = (*snake.Body)[i].Y - 1
 			continue
 		}
-
-		// Cell in front moved down
-		if (*snake.Body)[i].X == (*snake.Body)[i-1].X && (*snake.Body)[i].Y+2 == (*snake.Body)[i-1].Y {
-			(*snake.Body)[i].Y = (*snake.Body)[i].Y + 1
-			continue
-		}
-
 	}
 }
 
