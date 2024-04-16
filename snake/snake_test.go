@@ -2,6 +2,8 @@ package snake
 
 import (
 	"testing"
+
+	"sneakgame.com/constants"
 )
 
 func TestShouldNotMoveHeadBackwards(t *testing.T) {
@@ -13,7 +15,7 @@ func TestShouldNotMoveHeadBackwards(t *testing.T) {
 		table[i] = make([]uint8, 10)
 	}
 
-	MoveSnake(snake, &table, Up)
+	MoveSnake(snake, &table, constants.Up)
 	PrintTable(&table, snake)
 
 	for i := 0; i < len(*(originalSnake.Body)); i++ {
@@ -32,7 +34,7 @@ func TestShouldMoveHeadBottomRight(t *testing.T) {
 	}
 
 	PrintTable(&table, snake)
-	MoveSnake(snake, &table, Right)
+	MoveSnake(snake, &table, constants.Right)
 	PrintTable(&table, snake)
 }
 
@@ -45,7 +47,7 @@ func TestShouldMoveHeadBottomLeft(t *testing.T) {
 	}
 
 	PrintTable(&table, snake)
-	MoveSnake(snake, &table, Left)
+	MoveSnake(snake, &table, constants.Left)
 	PrintTable(&table, snake)
 }
 
@@ -58,15 +60,15 @@ func TestShouldMoveHeadTopLeft(t *testing.T) {
 	}
 
 	PrintTable(&table, snake)
-	MoveSnake(snake, &table, Left)
+	MoveSnake(snake, &table, constants.Left)
 	PrintTable(&table, snake)
 
-	MoveSnake(snake, &table, Left)
+	MoveSnake(snake, &table, constants.Left)
 	PrintTable(&table, snake)
 
-	MoveSnake(snake, &table, Up)
+	MoveSnake(snake, &table, constants.Up)
 	PrintTable(&table, snake)
-	MoveSnake(snake, &table, Up)
+	MoveSnake(snake, &table, constants.Up)
 	PrintTable(&table, snake)
 }
 
@@ -79,7 +81,7 @@ func TestShouldMoveHeadTopRight(t *testing.T) {
 	}
 
 	PrintTable(&table, snake)
-	MoveSnake(snake, &table, Right)
-	MoveSnake(snake, &table, Right)
+	MoveSnake(snake, &table, constants.Right)
+	MoveSnake(snake, &table, constants.Right)
 	PrintTable(&table, snake)
 }

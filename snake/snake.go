@@ -1,6 +1,10 @@
 package snake
 
-import "fmt"
+import (
+	"fmt"
+
+	constants "sneakgame.com/constants"
+)
 
 type SnakePoint struct {
 	X uint8
@@ -10,11 +14,6 @@ type SnakePoint struct {
 type Snake struct {
 	Body *[]SnakePoint
 }
-
-const Up = 1
-const Down = 2
-const Left = 3
-const Right = 4
 
 func MoveSnake(snake *Snake, field *[][]uint8, direction uint8) {
 	var previousPoint *SnakePoint
@@ -35,7 +34,7 @@ func MoveSnake(snake *Snake, field *[][]uint8, direction uint8) {
 			previousPoint = &SnakePoint{X: (*snake.Body)[i].X, Y: (*snake.Body)[i].Y}
 		}
 
-		if direction == Down {
+		if direction == constants.Down {
 			if i+1 < len(*snake.Body) && (*snake.Body)[i].Y+1 == (*snake.Body)[i+1].Y {
 				break
 			}
@@ -43,7 +42,7 @@ func MoveSnake(snake *Snake, field *[][]uint8, direction uint8) {
 			(*snake.Body)[i].Y = (*snake.Body)[i].Y + 1
 		}
 
-		if direction == Up {
+		if direction == constants.Up {
 			if i+1 < len(*snake.Body) && (*snake.Body)[i].Y-1 == (*snake.Body)[i+1].Y {
 				break
 			}
@@ -51,7 +50,7 @@ func MoveSnake(snake *Snake, field *[][]uint8, direction uint8) {
 			(*snake.Body)[i].Y = (*snake.Body)[i].Y - 1
 		}
 
-		if direction == Left {
+		if direction == constants.Left {
 			if i+1 < len(*snake.Body) && (*snake.Body)[i].X-1 == (*snake.Body)[i+1].X {
 				break
 			}
@@ -59,7 +58,7 @@ func MoveSnake(snake *Snake, field *[][]uint8, direction uint8) {
 			(*snake.Body)[i].X = (*snake.Body)[i].X - 1
 		}
 
-		if direction == Right {
+		if direction == constants.Right {
 			if i+1 < len(*snake.Body) && (*snake.Body)[i].X+1 == (*snake.Body)[i+1].X {
 				break
 			}
