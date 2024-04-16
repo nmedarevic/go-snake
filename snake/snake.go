@@ -31,15 +31,77 @@ func MakeSnake(x uint8, y uint8, length uint8) *Snake {
 
 func MakeSnakeHeadPointUp(x uint8, y uint8, length uint8) *Snake {
 	snakeBody := make([]SnakePoint, length)
-	snakeBody[0] = SnakePoint{X: uint8(x), Y: uint8(y)}
-	snakeBody[1] = SnakePoint{X: uint8(x), Y: uint8(y + 1)}
-	snakeBody[2] = SnakePoint{X: uint8(x), Y: uint8(y + 2)}
+	for i := 0; i < len(snakeBody); i++ {
+		snakeBody[i] = SnakePoint{X: uint8(x), Y: uint8(y + uint8(i))}
+	}
 
 	snake := Snake{
 		Body: &snakeBody,
 	}
 
 	return &snake
+}
+
+func MoveSnake(snake *Snake, field *[][]uint8, direction uint8) {
+	var previousPoint *SnakePoint
+
+	for i := 0; i < len(*snake.Body); i++ {
+		if previousPoint != nil {
+			var temporaryPoint = SnakePoint{X: (*snake.Body)[i].X, Y: (*snake.Body)[i].Y}
+
+			(*snake.Body)[i].X = previousPoint.X
+			(*snake.Body)[i].Y = previousPoint.Y
+
+			previousPoint = &temporaryPoint
+
+			continue
+		}
+
+		if previousPoint == nil {
+			previousPoint = &SnakePoint{X: (*snake.Body)[i].X, Y: (*snake.Body)[i].Y}
+		}
+
+		if direction == Down {
+			if i+1 < len(*snake.Body) && (*snake.Body)[i].Y+1 == (*snake.Body)[i+1].Y {
+				break
+			}
+
+			(*snake.Body)[i].Y = (*snake.Body)[i].Y + 1
+		}
+
+		if direction == Up {
+			if i+1 < len(*snake.Body) && (*snake.Body)[i].Y-1 == (*snake.Body)[i+1].Y {
+				break
+			}
+
+			(*snake.Body)[i].Y = (*snake.Body)[i].Y - 1
+		}
+
+		if direction == Left {
+			if i+1 < len(*snake.Body) && (*snake.Body)[i].X-1 == (*snake.Body)[i+1].X {
+				break
+			}
+
+			(*snake.Body)[i].X = (*snake.Body)[i].X - 1
+		}
+
+		if direction == Right {
+			if i+1 < len(*snake.Body) && (*snake.Body)[i].X+1 == (*snake.Body)[i+1].X {
+				break
+			}
+
+			fmt.Println("AAAA")
+			(*snake.Body)[i].X = (*snake.Body)[i].X + 1
+		}
+
+		if (*snake.Body)[i].Y >= uint8(len(*field)) {
+			(*snake.Body)[i].Y = 0
+		}
+
+		if (*snake.Body)[i].X >= uint8(len((*field)[0])) {
+			(*snake.Body)[i].X = 0
+		}
+	}
 }
 
 func MoveHead(snake *Snake, field *[][]uint8, direction uint8) {

@@ -13,7 +13,7 @@ func TestShouldNotMoveHeadBackwards(t *testing.T) {
 		table[i] = make([]uint8, 10)
 	}
 
-	Move(snake, &table, Up)
+	MoveSnake(snake, &table, Up)
 	PrintTable(&table, snake)
 
 	for i := 0; i < len(*(originalSnake.Body)); i++ {
@@ -32,7 +32,7 @@ func TestShouldMoveHeadBottomRight(t *testing.T) {
 	}
 
 	PrintTable(&table, snake)
-	Move(snake, &table, Right)
+	MoveSnake(snake, &table, Right)
 	PrintTable(&table, snake)
 }
 
@@ -45,7 +45,7 @@ func TestShouldMoveHeadBottomLeft(t *testing.T) {
 	}
 
 	PrintTable(&table, snake)
-	Move(snake, &table, Left)
+	MoveSnake(snake, &table, Left)
 	PrintTable(&table, snake)
 }
 
@@ -57,20 +57,21 @@ func TestShouldMoveHeadTopLeft(t *testing.T) {
 		table[i] = make([]uint8, 10)
 	}
 
-	Move(snake, &table, Left)
+	PrintTable(&table, snake)
+	MoveSnake(snake, &table, Left)
 	PrintTable(&table, snake)
 
-	Move(snake, &table, Left)
+	MoveSnake(snake, &table, Left)
 	PrintTable(&table, snake)
 
-	Move(snake, &table, Up)
+	MoveSnake(snake, &table, Up)
 	PrintTable(&table, snake)
-	Move(snake, &table, Up)
+	MoveSnake(snake, &table, Up)
 	PrintTable(&table, snake)
 }
 
 func TestShouldMoveHeadTopRight(t *testing.T) {
-	snake := MakeSnakeHeadPointUp(3, 5, 3)
+	snake := MakeSnakeHeadPointUp(3, 5, 5)
 
 	table := make([][]uint8, 10)
 	for i := range table {
@@ -78,7 +79,7 @@ func TestShouldMoveHeadTopRight(t *testing.T) {
 	}
 
 	PrintTable(&table, snake)
-	Move(snake, &table, Right)
-	Move(snake, &table, Right)
+	MoveSnake(snake, &table, Right)
+	MoveSnake(snake, &table, Right)
 	PrintTable(&table, snake)
 }
