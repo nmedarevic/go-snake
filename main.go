@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+	"time"
 
+	"sneakgame.com/constants"
 	keylistener "sneakgame.com/keylistener"
 	snakeModule "sneakgame.com/snake"
 
@@ -17,7 +19,14 @@ func clearScreen() {
 	c.Run()
 }
 
+func renderGame(snake *snakeModule.Snake, table *[][]uint8, direction uint8) {
+	clearScreen()
+	snakeModule.MoveSnake(snake, table, direction)
+	snakeModule.PrintTable(table, snake)
+}
+
 func main() {
+	var lastInput = constants.Down
 	doneChannel := make(chan bool, 1)
 	keyboardInputChannel := make(chan uint8, 10)
 
@@ -27,11 +36,18 @@ func main() {
 		table[i] = make([]uint8, 10)
 	}
 
-	c := exec.Command("clear")
-	c.Stdout = os.Stdout
-	c.Run()
+	clearScreen()
 
 	snakeModule.PrintTable(&table, snejk)
+
+	ticker := time.NewTicker(1000 * time.Millisecond)
+
+	go func() {
+		for {
+			<-ticker.C
+			renderGame(snejk, &table, lastInput)
+		}
+	}()
 
 	go func() {
 		for {
@@ -42,12 +58,13 @@ func main() {
 
 	go func() {
 		for {
-			input := <-keyboardInputChannel
+			lastInput = <-keyboardInputChannel
+			fmt.Println("Key pressed:", lastInput)
 
-			clearScreen()
-			snakeModule.MoveSnake(snejk, &table, input)
-			snakeModule.PrintTable(&table, snejk)
-			fmt.Println("Key pressed:", input)
+			// clearScreen()
+			// snakeModule.MoveSnake(snejk, &table, lastInput)
+			// snakeModule.PrintTable(&table, snejk)
+			renderGame(snejk, &table, lastInput)
 		}
 	}()
 

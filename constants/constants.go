@@ -1,6 +1,6 @@
 package constants
 
-const Up = 1
-const Down = 2
-const Left = 3
-const Right = 4
+const Up uint8 = 1
+const Down uint8 = 2
+const Left uint8 = 3
+const Right uint8 = 4
