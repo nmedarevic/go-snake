@@ -6,6 +6,8 @@ replace sneakgame.com/constants v0.0.0 => ./constants
 
 replace sneakgame.com/snake v0.0.0 => ./snake
 
+replace sneakgame.com/snake_cli v0.0.0 => ./snake_cli
+
 replace sneakgame.com/keylistener v0.0.0 => ./keylistener
 
 require (
@@ -17,4 +19,5 @@ require (
 	golang.design/x/mainthread v0.3.0 // indirect
 	sneakgame.com/constants v0.0.0 // indirect
 	sneakgame.com/snake v0.0.0
+	sneakgame.com/snake_cli v0.0.0
 )
