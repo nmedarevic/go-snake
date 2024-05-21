@@ -1,8 +1,8 @@
 package main
 
-import (
-	SnakeCli "sneakgame.com/snake_cli"
-)
+// import (
+// 	SnakeCli "sneakgame.com/snake_cli"
+// )
 
 // func clearScreen() {
 // 	c := exec.Command("clear")
@@ -62,11 +62,15 @@ import (
 // 	mainthread.Init(keylistener.GetKeyListener(doneChannel, keyboardInputChannel))
 // }
 
-func main() {
-	snakeCli := &SnakeCli.SnakeCli{}
+// func main() {
+// 	snakeCli := &SnakeCli.SnakeCli{}
 
-	snakeCli.InitializeSnake()
-	snakeCli.InitializeTable()
-	snakeCli.InitializeGame()
-	snakeCli.RunGame()
+// 	snakeCli.InitializeSnake()
+// 	snakeCli.InitializeTable()
+// 	snakeCli.InitializeGame()
+// 	snakeCli.RunGame()
+// }
+
+func main() {
+
 }
