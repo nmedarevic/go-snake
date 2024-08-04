@@ -70,8 +70,18 @@ func MoveSnake(snake *Snake, field *[][]uint8, direction uint8) {
 			(*snake.Body)[i].Y = 0
 		}
 
+		// When snake touches the left wall
+		if (*snake.Body)[i].Y == uint8(0) && previousPoint.Y == uint8(0) {
+			(*snake.Body)[i].Y = uint8(len(*field) - 1)
+		}
+
 		if (*snake.Body)[i].X >= uint8(len((*field)[0])) {
 			(*snake.Body)[i].X = 0
+		}
+
+		// When snake touches the right wall
+		if (*snake.Body)[i].X == uint8(0) && previousPoint.X == uint8(0) {
+			(*snake.Body)[i].X = uint8(len((*field)[0]) - 1)
 		}
 	}
 }
