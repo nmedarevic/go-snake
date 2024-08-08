@@ -114,7 +114,13 @@ func (cli *SnakeCli) RunGame() {
 
 	go func() {
 		for {
-			cli.lastInput = <-cli.keyboardInputChannel
+			latestMovementKey := <-cli.keyboardInputChannel
+
+			if constants.IsIllegalMovementKey(latestMovementKey, cli.lastInput) {
+				continue
+			}
+
+			cli.lastInput = latestMovementKey
 
 			exitWhenDone(isDone)
 		}
