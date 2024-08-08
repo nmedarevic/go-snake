@@ -3,7 +3,6 @@ package snake_cli
 import (
 	"time"
 
-	"fmt"
 	"os"
 	"os/exec"
 
@@ -20,6 +19,10 @@ type ISnakeCli interface {
 	RunGame()
 }
 
+const TABLE_SIZE = 10
+const RENDER_TICKER_REFRESH_MILIS = 40
+const MOVE_TICKER_MILIS = 200
+
 type SnakeCli struct {
 	snake     *snakeModule.Snake
 	table     *[][]uint8
@@ -28,6 +31,7 @@ type SnakeCli struct {
 	doneChannel          chan bool
 	keyboardInputChannel chan uint8
 	ticker               *time.Ticker
+	movementTicket       *time.Ticker
 }
 
 func (cli *SnakeCli) InitializeSnake() {
@@ -41,9 +45,10 @@ func (cli *SnakeCli) InitializeSnake() {
 }
 
 func (cli *SnakeCli) InitializeTable() {
-	table := make([][]uint8, 10)
+	table := make([][]uint8, TABLE_SIZE)
+
 	for i := range table {
-		table[i] = make([]uint8, 10)
+		table[i] = make([]uint8, TABLE_SIZE)
 	}
 
 	cli.table = &table
@@ -52,12 +57,13 @@ func (cli *SnakeCli) InitializeTable() {
 func (cli *SnakeCli) InitializeGame() {
 	doneChannel := make(chan bool, 1)
 	keyboardInputChannel := make(chan uint8, 10)
-	ticker := time.NewTicker(1000 * time.Millisecond)
+	ticker := time.NewTicker(RENDER_TICKER_REFRESH_MILIS * time.Millisecond)
 
 	cli.lastInput = constants.Down
 	cli.doneChannel = doneChannel
 	cli.keyboardInputChannel = keyboardInputChannel
 	cli.ticker = ticker
+	cli.movementTicket = time.NewTicker(MOVE_TICKER_MILIS * time.Millisecond)
 }
 
 func clearScreen() {
@@ -66,32 +72,51 @@ func clearScreen() {
 	c.Run()
 }
 
-func renderGame(snake *snakeModule.Snake, table *[][]uint8, direction uint8) {
+func renderGame(snake *snakeModule.Snake, table *[][]uint8) {
 	clearScreen()
-	snakeModule.MoveSnake(snake, table, direction)
 	snakeModule.PrintTable(table, snake)
 }
 
+func exitWhenDone(isDone bool) {
+	if isDone {
+		clearScreen()
+		os.Exit(0)
+		return
+	}
+}
+
 func (cli *SnakeCli) RunGame() {
+	var isDone bool
+
 	go func() {
 		for {
+			exitWhenDone(isDone)
 			<-cli.ticker.C
-			renderGame(cli.snake, cli.table, cli.lastInput)
+			renderGame(cli.snake, cli.table)
 		}
 	}()
 
 	go func() {
 		for {
-			<-cli.doneChannel
-			fmt.Println("Done!")
+			exitWhenDone(isDone)
+			<-cli.movementTicket.C
+			snakeModule.MoveSnake(cli.snake, cli.table, cli.lastInput)
+		}
+	}()
+
+	go func() {
+		for {
+			isDone = <-cli.doneChannel
+
+			exitWhenDone(isDone)
 		}
 	}()
 
 	go func() {
 		for {
 			cli.lastInput = <-cli.keyboardInputChannel
-			fmt.Println("Key pressed:", cli.lastInput)
-			renderGame(cli.snake, cli.table, cli.lastInput)
+
+			exitWhenDone(isDone)
 		}
 	}()
 
