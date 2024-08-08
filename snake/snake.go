@@ -103,17 +103,19 @@ func PrintTable(table *[][]uint8, snake *Snake) {
 				}
 			}
 
-			// Head
+			// Print snake Head
 			if (*table)[y][x] == 1 {
 				fmt.Print("⏿")
 				continue
 			}
 
-			// Body
+			// Print snake body
 			if (*table)[y][x] == 2 {
 				fmt.Print("x")
 				continue
 			}
+
+			// Prints empty space
 			fmt.Print("⠀")
 		}
 		fmt.Println()
