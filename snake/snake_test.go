@@ -72,7 +72,7 @@ func TestShouldMoveHeadTopLeft(t *testing.T) {
 	PrintTable(&table, snake)
 }
 
-func TestShouldMoveHeadTopRight(t *testing.T) {
+func TestShouldMoveToRight(t *testing.T) {
 	var startingX uint8 = 3
 	var startingY uint8 = 5
 	var snakeLength uint8 = 5
