@@ -15,14 +15,16 @@ func GetKeyListener(doneChannel chan bool, keyboardInputChannel chan uint8) func
 		keyLeft := hotkey.New([]hotkey.Modifier{}, hotkey.KeyLeft)
 		keyRight := hotkey.New([]hotkey.Modifier{}, hotkey.KeyRight)
 		keyClose := hotkey.New([]hotkey.Modifier{}, hotkey.KeyX)
+		keySpace := hotkey.New([]hotkey.Modifier{}, hotkey.KeySpace)
 
 		err1 := keyUp.Register()
 		err2 := keyDown.Register()
 		err3 := keyLeft.Register()
 		err4 := keyRight.Register()
 		err5 := keyClose.Register()
+		err6 := keySpace.Register()
 
-		if err1 != nil && err2 != nil && err3 != nil && err4 != nil && err5 != nil {
+		if err1 != nil || err2 != nil || err3 != nil || err4 != nil || err5 != nil || err6 != nil {
 			log.Fatalf("hotkey: failed to register hotkey")
 		}
 
@@ -31,6 +33,7 @@ func GetKeyListener(doneChannel chan bool, keyboardInputChannel chan uint8) func
 		go listenToKey(keyRight, keyboardInputChannel, doneChannel)
 		go listenToKey(keyLeft, keyboardInputChannel, doneChannel)
 		go listenToKey(keyClose, keyboardInputChannel, doneChannel)
+		go listenToKey(keySpace, keyboardInputChannel, doneChannel)
 
 		for {
 			<-doneChannel
@@ -40,6 +43,7 @@ func GetKeyListener(doneChannel chan bool, keyboardInputChannel chan uint8) func
 			keyLeft.Unregister()
 			keyRight.Unregister()
 			keyClose.Unregister()
+			keySpace.Unregister()
 		}
 	}
 }
@@ -60,6 +64,9 @@ func listenToKey(key *hotkey.Hotkey, input chan uint8, doneChannel chan bool) {
 		}
 		if hexKeyVal == int(hotkey.KeyRight) {
 			input <- constants.Right
+		}
+		if hexKeyVal == int(hotkey.KeySpace) {
+			input <- constants.Space
 		}
 		if key.String() == "X" {
 			doneChannel <- true
