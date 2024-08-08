@@ -9,6 +9,10 @@ const Escape uint8 = 27
 const Q uint8 = 113
 
 func IsIllegalMovementKey(key uint8, previousKey uint8) bool {
+	if key == previousKey {
+		return true
+	}
+
 	if key == Up && previousKey == Down {
 		return true
 	}
