@@ -73,15 +73,28 @@ func TestShouldMoveHeadTopLeft(t *testing.T) {
 }
 
 func TestShouldMoveHeadTopRight(t *testing.T) {
-	snake := MakeSnakeHeadPointUp(3, 5, 5)
+	var startingX uint8 = 3
+	var startingY uint8 = 5
+	var snakeLength uint8 = 5
+
+	snake := MakeSnakePointingUp(startingX, startingY, snakeLength)
 
 	table := make([][]uint8, 10)
 	for i := range table {
 		table[i] = make([]uint8, 10)
 	}
 
-	PrintTable(&table, snake)
+	// PrintTable(&table, snake)
+
 	MoveSnake(snake, &table, constants.Right)
+	// PrintTable(&table, snake)
 	MoveSnake(snake, &table, constants.Right)
-	PrintTable(&table, snake)
+	// PrintTable(&table, snake)
+
+	var headDidNotMoveRight = (*(snake).Body)[0].X != startingX+2
+	var headDidNotMoveUp = (*(snake).Body)[0].Y != startingY
+
+	if headDidNotMoveRight || headDidNotMoveUp {
+		t.Errorf("Head is not in correct place")
+	}
 }

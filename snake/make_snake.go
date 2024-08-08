@@ -15,7 +15,21 @@ func MakeSnake(x uint8, y uint8, length uint8) *Snake {
 
 func MakeSnakeHeadPointUp(x uint8, y uint8, length uint8) *Snake {
 	snakeBody := make([]SnakePoint, length)
-	for i := 0; i < len(snakeBody); i++ {
+	for i := 0; i < int(length); i++ {
+		snakeBody[i] = SnakePoint{X: uint8(x), Y: uint8(y + uint8(i))}
+	}
+
+	snake := Snake{
+		Body: &snakeBody,
+	}
+
+	return &snake
+}
+
+func MakeSnakePointingUp(x uint8, y uint8, length uint8) *Snake {
+	snakeBody := make([]SnakePoint, length)
+
+	for i := 0; i < int(length); i++ {
 		snakeBody[i] = SnakePoint{X: uint8(x), Y: uint8(y + uint8(i))}
 	}
 
