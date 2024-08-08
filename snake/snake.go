@@ -88,6 +88,7 @@ func MoveSnake(snake *Snake, field *[][]uint8, direction uint8) {
 
 func PrintTable(table *[][]uint8, snake *Snake) {
 	fmt.Println(snake.Body)
+
 	for y := range *table {
 		for x := range (*table)[y] {
 			(*table)[y][x] = uint8(0)
@@ -101,15 +102,19 @@ func PrintTable(table *[][]uint8, snake *Snake) {
 					continue
 				}
 			}
+
+			// Head
 			if (*table)[y][x] == 1 {
-				fmt.Print("H")
+				fmt.Print("⏿")
 				continue
 			}
+
+			// Body
 			if (*table)[y][x] == 2 {
-				fmt.Print("B")
+				fmt.Print("x")
 				continue
 			}
-			fmt.Print("_")
+			fmt.Print("⠀")
 		}
 		fmt.Println()
 	}
