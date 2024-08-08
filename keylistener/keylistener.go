@@ -9,41 +9,43 @@ import (
 )
 
 func GetKeyListener(doneChannel chan bool, keyboardInputChannel chan uint8) func() {
+	usedKeys := []hotkey.Key{
+		hotkey.KeyUp,
+		hotkey.KeyDown,
+		hotkey.KeyLeft,
+		hotkey.KeyRight,
+		hotkey.KeyX,
+		hotkey.KeySpace,
+		hotkey.KeyEscape,
+		hotkey.KeyQ,
+	}
+
 	return func() {
-		keyUp := hotkey.New([]hotkey.Modifier{}, hotkey.KeyUp)
-		keyDown := hotkey.New([]hotkey.Modifier{}, hotkey.KeyDown)
-		keyLeft := hotkey.New([]hotkey.Modifier{}, hotkey.KeyLeft)
-		keyRight := hotkey.New([]hotkey.Modifier{}, hotkey.KeyRight)
-		keyClose := hotkey.New([]hotkey.Modifier{}, hotkey.KeyX)
-		keySpace := hotkey.New([]hotkey.Modifier{}, hotkey.KeySpace)
+		keyRegistrations := make([]*hotkey.Hotkey, 0)
 
-		err1 := keyUp.Register()
-		err2 := keyDown.Register()
-		err3 := keyLeft.Register()
-		err4 := keyRight.Register()
-		err5 := keyClose.Register()
-		err6 := keySpace.Register()
+		for _, value := range usedKeys {
+			newHotkeyPointer := hotkey.New([]hotkey.Modifier{}, value)
 
-		if err1 != nil || err2 != nil || err3 != nil || err4 != nil || err5 != nil || err6 != nil {
-			log.Fatalf("hotkey: failed to register hotkey")
+			keyRegistrations = append(keyRegistrations, newHotkeyPointer)
 		}
 
-		go listenToKey(keyUp, keyboardInputChannel, doneChannel)
-		go listenToKey(keyDown, keyboardInputChannel, doneChannel)
-		go listenToKey(keyRight, keyboardInputChannel, doneChannel)
-		go listenToKey(keyLeft, keyboardInputChannel, doneChannel)
-		go listenToKey(keyClose, keyboardInputChannel, doneChannel)
-		go listenToKey(keySpace, keyboardInputChannel, doneChannel)
+		for _, hotkeyPointer := range keyRegistrations {
+			error := hotkeyPointer.Register()
+
+			if error != nil {
+				log.Fatalf("hotkey: failed to register hotkey")
+			}
+
+			go listenToKey(hotkeyPointer, keyboardInputChannel, doneChannel)
+		}
 
 		for {
 			<-doneChannel
 			log.Print("Unregistering all listeners")
-			keyUp.Unregister()
-			keyDown.Unregister()
-			keyLeft.Unregister()
-			keyRight.Unregister()
-			keyClose.Unregister()
-			keySpace.Unregister()
+
+			for _, hotkeyPointer := range keyRegistrations {
+				hotkeyPointer.Unregister()
+			}
 		}
 	}
 }
@@ -68,7 +70,10 @@ func listenToKey(key *hotkey.Hotkey, input chan uint8, doneChannel chan bool) {
 		if hexKeyVal == int(hotkey.KeySpace) {
 			input <- constants.Space
 		}
-		if key.String() == "X" {
+
+		// fmt.Println("Key pressed:", hexKeyVal, key.String(), int(hotkey.KeyQ), int(hotkey.KeyEscape))
+
+		if key.String() == "X" || hexKeyVal == int(hotkey.KeyQ) || hexKeyVal == int(hotkey.KeyEscape) {
 			doneChannel <- true
 		}
 	}
