@@ -90,32 +90,21 @@ func PrintTable(table *[][]uint8, snake *Snake) {
 	fmt.Println(snake.Body)
 
 	for y := range *table {
+	loop:
 		for x := range (*table)[y] {
-			(*table)[y][x] = uint8(0)
 			for index, s := range *snake.Body {
 				if uint8(x) == s.X && uint8(y) == s.Y {
+
 					if index == 0 {
-						(*table)[y][x] = uint8(1)
-						continue
+						fmt.Print("⏿")
+						continue loop
 					}
-					(*table)[y][x] = uint8(2)
-					continue
+
+					fmt.Print("x")
+
+					continue loop
 				}
 			}
-
-			// Print snake Head
-			if (*table)[y][x] == 1 {
-				fmt.Print("⏿")
-				continue
-			}
-
-			// Print snake body
-			if (*table)[y][x] == 2 {
-				fmt.Print("x")
-				continue
-			}
-
-			// Prints empty space
 			fmt.Print("⠀")
 		}
 		fmt.Println()
