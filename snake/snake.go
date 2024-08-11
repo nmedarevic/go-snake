@@ -13,6 +13,7 @@ type SnakePoint struct {
 
 type Snake struct {
 	Body *[]SnakePoint
+	Id   string
 }
 
 func MoveSnake(snake *Snake, field *[][]uint8, direction uint8) {
@@ -109,4 +110,87 @@ func PrintTable(table *[][]uint8, snake *Snake) {
 		}
 		fmt.Println()
 	}
+}
+
+func RenderGameToTerminal(table *[][]uint8, snakes [](*Snake)) {
+	for y := range *table {
+	loopSnakes:
+		for x := range (*table)[y] {
+			for _, snake := range snakes {
+
+				for index, s := range *snake.Body {
+					if uint8(x) == s.X && uint8(y) == s.Y {
+
+						if index == 0 {
+							fmt.Print("⏿")
+							continue loopSnakes
+						}
+
+						fmt.Print("x")
+
+						continue loopSnakes
+					}
+				}
+			}
+			fmt.Print("⠀")
+		}
+		fmt.Println()
+	}
+}
+
+func IsHeadTouchingOtherSnake(snake1 *Snake, snake2 *Snake) bool {
+	var head = (*(*snake1).Body)[0]
+
+	for i := 0; i < len((*(*snake2).Body)); i++ {
+		snakePoint := (*(*snake2).Body)[i]
+
+		if head.X == snakePoint.X && head.Y == snakePoint.Y {
+			return true
+		}
+	}
+
+	return false
+}
+
+func HandleSnakeContact(snake1 *Snake, snake2 *Snake) {
+	var head = (*(*snake1).Body)[0]
+
+	for i := 0; i < len((*(*snake2).Body)); i++ {
+		snakePoint := (*(*snake2).Body)[i]
+
+		if head.X == snakePoint.X && head.Y == snakePoint.Y {
+			*((*snake2).Body) = (*(*snake2).Body)[0:i]
+			return
+		}
+	}
+}
+
+func AreSnakesTouching(snakes [](*Snake)) bool {
+	for _, snake := range snakes {
+		var head = (*(*snake).Body)[0]
+		var id = (*snake).Id
+
+		for _, snake2 := range snakes {
+			if (*snake2).Id == id {
+				continue
+			}
+
+			// var otherHead = (*(*snake).Body)[0]
+
+			// if heads touch, longer snake winds
+
+			// if current snake is in other snake's body
+			// make other snake smaller
+			// var shouldDelete = false
+			for i := 0; i < len((*(*snake).Body)); i++ {
+				snakePoint := (*(*snake).Body)[i]
+
+				if head.X == snakePoint.X && head.Y == snakePoint.Y {
+					return true
+				}
+			}
+		}
+	}
+
+	return false
 }

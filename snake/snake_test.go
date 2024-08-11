@@ -85,7 +85,6 @@ func TestShouldMoveToRight(t *testing.T) {
 	}
 
 	// PrintTable(&table, snake)
-
 	MoveSnake(snake, &table, constants.Right)
 	// PrintTable(&table, snake)
 	MoveSnake(snake, &table, constants.Right)
@@ -97,4 +96,46 @@ func TestShouldMoveToRight(t *testing.T) {
 	if headDidNotMoveRight || headDidNotMoveUp {
 		t.Errorf("Head is not in correct place")
 	}
+}
+
+func TestRenderingTwoSnakes(t *testing.T) {
+	// Snake 1
+	var startingX uint8 = 3
+	var startingY uint8 = 5
+	var snakeLength uint8 = 5
+
+	// Snake 2
+	var startingX2 uint8 = 1
+	var startingY2 uint8 = 3
+	var snakeLength2 uint8 = 5
+
+	snake := MakeSnakePointingUp(startingX, startingY, snakeLength)
+	snake2 := MakeSnakePointingRight(startingX2, startingY2, snakeLength2)
+
+	table := make([][]uint8, 10)
+	for i := range table {
+		table[i] = make([]uint8, 10)
+	}
+
+	// PrintTable(&table, snake)
+	// PrintTable(&table, snake2)
+	RenderGameToTerminal(&table, []*Snake{snake, snake2})
+	// Move snake 1 up
+	MoveSnake(snake, &table, constants.Up)
+	MoveSnake(snake, &table, constants.Up)
+
+	if IsHeadTouchingOtherSnake(snake, snake2) {
+		HandleSnakeContact(snake, snake2)
+	}
+	// MoveSnake(snake, &table, constants.Down)
+	// MoveSnake(snake, &table, constants.Right)
+	RenderGameToTerminal(&table, []*Snake{snake, snake2})
+
+	// var headDidNotMoveRight = (*(snake).Body)[0].X != startingX+2
+	var headDidNotMoveUp = (*(snake).Body)[0].Y != startingY-2
+
+	if headDidNotMoveUp {
+		t.Errorf("Head is not in correct place")
+	}
+
 }
