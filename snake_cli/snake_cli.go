@@ -35,11 +35,11 @@ type SnakeCli struct {
 }
 
 func (cli *SnakeCli) InitializeSnake() {
-	var startPointX uint8 = 3
-	var startPointY uint8 = 5
+	var startPointX int32 = 3
+	var startPointY int32 = 5
 	snakeLength := 3
 
-	snejk := snakeModule.MakeSnake(startPointX, startPointY, uint8(snakeLength))
+	snejk := snakeModule.MakeSnake(startPointX, startPointY, int32(snakeLength))
 
 	cli.snake = snejk
 }
@@ -74,7 +74,8 @@ func clearScreen() {
 
 func renderGame(snake *snakeModule.Snake, table *[][]uint8) {
 	clearScreen()
-	snakeModule.PrintTable(table, snake)
+	snake.Print()
+	// snakeModule.PrintTable(table, snake)
 }
 
 func exitWhenDone(isDone bool) {
@@ -100,7 +101,8 @@ func (cli *SnakeCli) RunGame() {
 		for {
 			exitWhenDone(isDone)
 			<-cli.movementTicket.C
-			snakeModule.MoveSnake(cli.snake, cli.table, cli.lastInput)
+			cli.snake.Move(cli.lastInput)
+			// snakeModule.MoveSnake(cli.snake, cli.table, cli.lastInput)
 		}
 	}()
 

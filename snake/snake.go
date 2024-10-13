@@ -7,8 +7,8 @@ import (
 )
 
 type SnakePoint struct {
-	X uint8
-	Y uint8
+	X int32
+	Y int32
 }
 
 type Snake struct {
@@ -16,7 +16,14 @@ type Snake struct {
 	Id   string
 }
 
-func MoveSnake(snake *Snake, field *[][]uint8, direction uint8) {
+type EnclosingRectangle struct {
+	Xmin int32
+	Xmax int32
+	Ymin int32
+	Ymax int32
+}
+
+func (snake *Snake) Move(direction uint8) {
 	var previousPoint *SnakePoint
 
 	for i := 0; i < len(*snake.Body); i++ {
@@ -36,19 +43,19 @@ func MoveSnake(snake *Snake, field *[][]uint8, direction uint8) {
 		}
 
 		if direction == constants.Down {
-			if i+1 < len(*snake.Body) && (*snake.Body)[i].Y+1 == (*snake.Body)[i+1].Y {
-				break
-			}
-
-			(*snake.Body)[i].Y = (*snake.Body)[i].Y + 1
-		}
-
-		if direction == constants.Up {
 			if i+1 < len(*snake.Body) && (*snake.Body)[i].Y-1 == (*snake.Body)[i+1].Y {
 				break
 			}
 
 			(*snake.Body)[i].Y = (*snake.Body)[i].Y - 1
+		}
+
+		if direction == constants.Up {
+			if i+1 < len(*snake.Body) && (*snake.Body)[i].Y+1 == (*snake.Body)[i+1].Y {
+				break
+			}
+
+			(*snake.Body)[i].Y = (*snake.Body)[i].Y + 1
 		}
 
 		if direction == constants.Left {
@@ -66,36 +73,52 @@ func MoveSnake(snake *Snake, field *[][]uint8, direction uint8) {
 
 			(*snake.Body)[i].X = (*snake.Body)[i].X + 1
 		}
-
-		if (*snake.Body)[i].Y >= uint8(len(*field)) {
-			(*snake.Body)[i].Y = 0
-		}
-
-		// When snake touches the left wall
-		if (*snake.Body)[i].Y == uint8(0) && previousPoint.Y == uint8(0) {
-			(*snake.Body)[i].Y = uint8(len(*field) - 1)
-		}
-
-		if (*snake.Body)[i].X >= uint8(len((*field)[0])) {
-			(*snake.Body)[i].X = 0
-		}
-
-		// When snake touches the right wall
-		if (*snake.Body)[i].X == uint8(0) && previousPoint.X == uint8(0) {
-			(*snake.Body)[i].X = uint8(len((*field)[0]) - 1)
-		}
 	}
 }
 
-func PrintTable(table *[][]uint8, snake *Snake) {
+func findEnclosingRectangle(snake *Snake) *EnclosingRectangle {
+	var rectangleXMax int32 = 0
+	var rectangleXMin int32 = 2147483647
+	var rectangleYMax int32 = 0
+	var rectangleYMin int32 = 2147483647
+
+	for _, point := range *snake.Body {
+		if point.X > rectangleXMax {
+			rectangleXMax = point.X
+		}
+
+		if point.X < rectangleXMin {
+			rectangleXMin = point.X
+		}
+
+		if point.Y > rectangleYMax {
+			rectangleYMax = point.Y
+		}
+
+		if point.Y < rectangleYMin {
+			rectangleYMin = point.Y
+		}
+	}
+
+	var rectangle = EnclosingRectangle{
+		Xmin: rectangleXMin,
+		Xmax: rectangleXMax,
+		Ymin: rectangleYMin,
+		Ymax: rectangleYMax,
+	}
+
+	return &rectangle
+}
+
+func (snake *Snake) Print() {
+	var enclosingRectangle = findEnclosingRectangle(snake)
+	fmt.Println(enclosingRectangle)
 	fmt.Println(snake.Body)
-
-	for y := range *table {
+	for y := int(enclosingRectangle.Ymax) - int(enclosingRectangle.Ymin); y >= 0; y-- {
 	loop:
-		for x := range (*table)[y] {
+		for x := 0; x <= int(enclosingRectangle.Xmax)-int(enclosingRectangle.Xmin); x++ {
 			for index, s := range *snake.Body {
-				if uint8(x) == s.X && uint8(y) == s.Y {
-
+				if int32(x) == s.X-enclosingRectangle.Xmin && int32(y) == s.Y-enclosingRectangle.Ymin {
 					if index == 0 {
 						fmt.Print("⏿")
 						continue loop
@@ -112,31 +135,31 @@ func PrintTable(table *[][]uint8, snake *Snake) {
 	}
 }
 
-func RenderGameToTerminal(table *[][]uint8, snakes [](*Snake)) {
-	for y := range *table {
-	loopSnakes:
-		for x := range (*table)[y] {
-			for _, snake := range snakes {
+// func RenderGameToTerminal(table *[][]uint8, snakes [](*Snake)) {
+// 	for y := range *table {
+// 	loopSnakes:
+// 		for x := range (*table)[y] {
+// 			for _, snake := range snakes {
 
-				for index, s := range *snake.Body {
-					if uint8(x) == s.X && uint8(y) == s.Y {
+// 				for index, s := range *snake.Body {
+// 					if uint8(x) == s.X && uint8(y) == s.Y {
 
-						if index == 0 {
-							fmt.Print("⏿")
-							continue loopSnakes
-						}
+// 						if index == 0 {
+// 							fmt.Print("⏿")
+// 							continue loopSnakes
+// 						}
 
-						fmt.Print("x")
+// 						fmt.Print("x")
 
-						continue loopSnakes
-					}
-				}
-			}
-			fmt.Print("⠀")
-		}
-		fmt.Println()
-	}
-}
+// 						continue loopSnakes
+// 					}
+// 				}
+// 			}
+// 			fmt.Print("⠀")
+// 		}
+// 		fmt.Println()
+// 	}
+// }
 
 func IsHeadTouchingOtherSnake(snake1 *Snake, snake2 *Snake) bool {
 	var head = (*(*snake1).Body)[0]
