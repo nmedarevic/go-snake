@@ -66,9 +66,7 @@ func TestShouldMoveHeadBottomRight(t *testing.T) {
 }
 
 func TestShouldMoveHeadBottomLeft(t *testing.T) {
-	var snakeLength int32 = 0
-
-	snakeBody := make([]SnakePoint, snakeLength)
+	snakeBody := make([]SnakePoint, 0)
 	snakeBody = append(snakeBody, SnakePoint{X: int32(0), Y: int32(0)})
 	snakeBody = append(snakeBody, SnakePoint{X: int32(0), Y: int32(1)})
 	snakeBody = append(snakeBody, SnakePoint{X: int32(0), Y: int32(2)})
@@ -108,9 +106,9 @@ func TestShouldMoveHeadTopLeft(t *testing.T) {
 	snake.Move(constants.Up)
 	snake.Print()
 
-	if (*snake.Body)[0].X != -1 && (*snake.Body)[0].Y != 5 ||
-		(*snake.Body)[1].X != -1 && (*snake.Body)[1].Y != 4 ||
-		(*snake.Body)[2].X != 0 && (*snake.Body)[2].Y == 4 {
+	if (*snake.Body)[0].X != -1 || (*snake.Body)[0].Y != 5 ||
+		(*snake.Body)[1].X != -1 || (*snake.Body)[1].Y != 4 ||
+		(*snake.Body)[2].X != 0 || (*snake.Body)[2].Y != 4 {
 		t.Errorf("Head is not in correct place")
 	}
 }
