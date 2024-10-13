@@ -7,19 +7,37 @@ import (
 )
 
 func TestShouldNotMoveHeadBackwards(t *testing.T) {
-	originalSnake := MakeSnake(3, 5, 3)
-	snake := MakeSnake(3, 5, 3)
+	var snakeLength int32 = 5
 
-	table := make([][]uint8, 10)
-	for i := range table {
-		table[i] = make([]uint8, 10)
+	snakeBodyOriginal := make([]SnakePoint, snakeLength)
+	snakeBodyOriginal[0] = SnakePoint{X: int32(0), Y: int32(4)}
+	snakeBodyOriginal[1] = SnakePoint{X: int32(0), Y: int32(3)}
+	snakeBodyOriginal[2] = SnakePoint{X: int32(0), Y: int32(2)}
+	snakeBodyOriginal[3] = SnakePoint{X: int32(0), Y: int32(1)}
+	snakeBodyOriginal[4] = SnakePoint{X: int32(0), Y: int32(0)}
+
+	snakeOriginal := Snake{
+		Body: &snakeBodyOriginal,
+		Id:   randSeq(10),
 	}
 
-	snake.Move((constants.Up))
+	snakeBody := make([]SnakePoint, snakeLength)
+	snakeBody[0] = SnakePoint{X: int32(0), Y: int32(4)}
+	snakeBody[1] = SnakePoint{X: int32(0), Y: int32(3)}
+	snakeBody[2] = SnakePoint{X: int32(0), Y: int32(2)}
+	snakeBody[3] = SnakePoint{X: int32(0), Y: int32(1)}
+	snakeBody[4] = SnakePoint{X: int32(0), Y: int32(0)}
+
+	snake := Snake{
+		Body: &snakeBody,
+		Id:   randSeq(10),
+	}
+
+	snake.Move((constants.Down))
 	snake.Print()
 
-	for i := 0; i < len(*(originalSnake.Body)); i++ {
-		if (*(originalSnake.Body))[i].X != (*(snake.Body))[i].X || (*(originalSnake.Body))[i].Y != (*snake.Body)[i].Y {
+	for i := 0; i < len(*(snakeOriginal.Body)); i++ {
+		if (*(snakeOriginal.Body))[i].X != (*(snake.Body))[i].X || (*(snakeOriginal.Body))[i].Y != (*snake.Body)[i].Y {
 			t.Errorf("Snake head moved backwards")
 		}
 	}
