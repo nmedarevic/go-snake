@@ -86,7 +86,7 @@ func TestShouldMoveHeadBottomLeft(t *testing.T) {
 	}
 }
 
-func Test_SnakeGoingLeft(t *testing.T) {
+func Test_SnakeGoingRight(t *testing.T) {
 	t.Run("Should move the head down by pressing Down", func(t *testing.T) {
 		snakeBody := make([]SnakePoint, 0)
 		snakeBody = append(snakeBody, SnakePoint{X: int32(2), Y: int32(0)})
@@ -103,6 +103,72 @@ func Test_SnakeGoingLeft(t *testing.T) {
 		// snake.Print()
 
 		if (*snake.Body)[0].X != 2 || (*snake.Body)[0].Y != -1 ||
+			(*snake.Body)[1].X != 2 || (*snake.Body)[1].Y != 0 ||
+			(*snake.Body)[2].X != 1 || (*snake.Body)[2].Y != 0 {
+			t.Errorf("Head is not in correct place")
+		}
+	})
+
+	t.Run("Should move the head up by pressing Up", func(t *testing.T) {
+		snakeBody := make([]SnakePoint, 0)
+		snakeBody = append(snakeBody, SnakePoint{X: int32(2), Y: int32(0)})
+		snakeBody = append(snakeBody, SnakePoint{X: int32(1), Y: int32(0)})
+		snakeBody = append(snakeBody, SnakePoint{X: int32(0), Y: int32(0)})
+
+		snake := Snake{
+			Body: &snakeBody,
+			Id:   randSeq(10),
+		}
+
+		// snake.Print()
+		snake.Move(constants.Up)
+		// snake.Print()
+
+		if (*snake.Body)[0].X != 2 || (*snake.Body)[0].Y != 1 ||
+			(*snake.Body)[1].X != 2 || (*snake.Body)[1].Y != 0 ||
+			(*snake.Body)[2].X != 1 || (*snake.Body)[2].Y != 0 {
+			t.Errorf("Head is not in correct place")
+		}
+	})
+
+	t.Run("Should not move the head back by pressing Left", func(t *testing.T) {
+		snakeBody := make([]SnakePoint, 0)
+		snakeBody = append(snakeBody, SnakePoint{X: int32(2), Y: int32(0)})
+		snakeBody = append(snakeBody, SnakePoint{X: int32(1), Y: int32(0)})
+		snakeBody = append(snakeBody, SnakePoint{X: int32(0), Y: int32(0)})
+
+		snake := Snake{
+			Body: &snakeBody,
+			Id:   randSeq(10),
+		}
+
+		// snake.Print()
+		snake.Move(constants.Left)
+		// snake.Print()
+
+		if (*snake.Body)[0].X != 2 || (*snake.Body)[0].Y != 0 ||
+			(*snake.Body)[1].X != 1 || (*snake.Body)[1].Y != 0 ||
+			(*snake.Body)[2].X != 0 || (*snake.Body)[2].Y != 0 {
+			t.Errorf("Head is not in correct place")
+		}
+	})
+
+	t.Run("Should not move the head forward by pressing Right", func(t *testing.T) {
+		snakeBody := make([]SnakePoint, 0)
+		snakeBody = append(snakeBody, SnakePoint{X: int32(2), Y: int32(0)})
+		snakeBody = append(snakeBody, SnakePoint{X: int32(1), Y: int32(0)})
+		snakeBody = append(snakeBody, SnakePoint{X: int32(0), Y: int32(0)})
+
+		snake := Snake{
+			Body: &snakeBody,
+			Id:   randSeq(10),
+		}
+
+		// snake.Print()
+		snake.Move(constants.Right)
+		// snake.Print()
+
+		if (*snake.Body)[0].X != 3 || (*snake.Body)[0].Y != 0 ||
 			(*snake.Body)[1].X != 2 || (*snake.Body)[1].Y != 0 ||
 			(*snake.Body)[2].X != 1 || (*snake.Body)[2].Y != 0 {
 			t.Errorf("Head is not in correct place")
