@@ -73,7 +73,7 @@ func RunServer() {
 	log.Fatal(http.ListenAndServe(":3000", srvr.router))
 }
 
-// func main() {
-// 	fmt.Println("Hello, World!")
-// 	RunServer()
-// }
+func main() {
+	fmt.Println("Hello, World!")
+	RunServer()
+}
