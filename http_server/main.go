@@ -1,15 +1,17 @@
-package http_server
+package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
 
-	snake "sneakgame.com/snake"
+	"github.com/a-h/templ"
+	"snakegame.com/http/start"
 )
 
 type SnakeGameUnit struct {
-	snake    snake.Snake
+	// snake    snake.Snake
 	playerId string
 }
 
@@ -26,7 +28,7 @@ type SnakeGame interface {
 // }
 
 // func ListenAndServe(addr string, handler Handler) error
-// type SnakeServer struct {
+// type Server struct {
 // 	store PlayerStore
 // }
 
@@ -34,20 +36,35 @@ type SnakeGame interface {
 // 	ServeHTTP(http.ResponseWriter, *http.Request)
 // }
 
-type SnakeServer struct {
+type Server struct {
 	router        *http.ServeMux
 	calculateTick func(playerId string) *SnakeGameUnit
 }
 
-func (s *SnakeServer) HandleTest(w http.ResponseWriter, r *http.Request) {
+func (s *Server) HandleTest(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
+	w.Write([]byte("Hello"))
 }
 
-func (s *SnakeServer) routes() {
+type HelloJSON struct {
+	A int
+}
+
+func (s *Server) HandleJSONResponse(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
+	helloJson := HelloJSON{
+		A: 1,
+	}
+	json.NewEncoder(w).Encode(helloJson)
+}
+
+func (s *Server) routes() {
 	s.router.HandleFunc("/test", s.HandleTest)
+	s.router.HandleFunc("/test-a", s.HandleJSONResponse)
 }
 
-func (s *SnakeServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	// player := strings.TrimPrefix(r.URL.Path, "/snake")
 
 	fmt.Fprint(w, "20")
@@ -64,7 +81,7 @@ func (s *SnakeServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func RunServer() {
-	srvr := SnakeServer{
+	srvr := Server{
 		router: http.NewServeMux(),
 	}
 
@@ -75,5 +92,13 @@ func RunServer() {
 
 func main() {
 	fmt.Println("Hello, World!")
-	RunServer()
+
+	component := start.Hello("John")
+	// component.Render(context.Background(), os.Stdout)
+
+	http.Handle("/", templ.Handler(component))
+	fmt.Println("Listening on :3000")
+	http.ListenAndServe(":3000", nil)
+
+	// RunServer()
 }
