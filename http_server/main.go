@@ -20,23 +20,6 @@ type SnakeGame interface {
 	calculateTick(playerId string) *SnakeGameUnit
 }
 
-// type PlayerStore interface {
-// 	GetPlayerScore(name string) int
-// }
-
-// func handleIndexPage(w http.ResponseWriter, r *http.Request) {
-// 	fmt.Fprint(w, "Hello, World!")
-// }
-
-// func ListenAndServe(addr string, handler Handler) error
-// type Server struct {
-// 	store PlayerStore
-// }
-
-// type Handler interface {
-// 	ServeHTTP(http.ResponseWriter, *http.Request)
-// }
-
 type Server struct {
 	router        *http.ServeMux
 	calculateTick func(playerId string) *SnakeGameUnit
@@ -65,22 +48,6 @@ func (s *Server) routes() {
 	s.router.HandleFunc("/test-a", s.HandleJSONResponse)
 }
 
-func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	// player := strings.TrimPrefix(r.URL.Path, "/snake")
-
-	fmt.Fprint(w, "20")
-	// return
-	// if player == "Pepper" {
-	// 	fmt.Fprint(w, "20")
-	// 	return
-	// }
-
-	// if player == "Floyd" {
-	// 	fmt.Fprint(w, "10")
-	// 	return
-	// }
-}
-
 func RunServer() {
 	srvr := Server{
 		router: http.NewServeMux(),
@@ -106,12 +73,20 @@ func main() {
 
 	snek.Print()
 
-	component := start.Hello("John")
-	// component.Render(context.Background(), os.Stdout)
+	data := map[string]interface{}{
+		"snake": snek.Body,
+	}
+
+	jsonData, err := json.Marshal(data)
+
+	if err != nil {
+		fmt.Printf("could not marshal json: %s\n", err)
+	}
+	fmt.Printf("json data: %s\n", jsonData)
+
+	component := start.Hello(string(jsonData))
 
 	http.Handle("/", templ.Handler(component))
 	fmt.Println("Listening on :3000")
 	http.ListenAndServe(":3000", nil)
-
-	// RunServer()
 }
