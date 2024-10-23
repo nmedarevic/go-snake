@@ -3,7 +3,7 @@ package snake
 import (
 	"fmt"
 
-	constants "sneakgame.com/constants"
+	constants "snakegame.com/constants"
 )
 
 type SnakePoint struct {

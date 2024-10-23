@@ -5,7 +5,7 @@ import (
 	"strconv"
 
 	"golang.design/x/hotkey"
-	constants "sneakgame.com/constants"
+	constants "snakegame.com/constants"
 )
 
 func GetKeyListener(doneChannel chan bool, keyboardInputChannel chan uint8) func() {

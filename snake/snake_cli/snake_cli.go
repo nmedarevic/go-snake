@@ -8,9 +8,9 @@ import (
 	"os/exec"
 
 	"golang.design/x/hotkey/mainthread"
-	"sneakgame.com/constants"
-	keylistener "sneakgame.com/keylistener"
-	snakeModule "sneakgame.com/snake"
+	"snakegame.com/constants"
+	keylistener "snakegame.com/keylistener"
+	snakeModule "snakegame.com/snake"
 )
 
 type ISnakeCli interface {

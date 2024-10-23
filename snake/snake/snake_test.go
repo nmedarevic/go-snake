@@ -3,7 +3,7 @@ package snake
 import (
 	"testing"
 
-	"sneakgame.com/constants"
+	"snakegame.com/constants"
 )
 
 func Test_SnakeGoingLeft(t *testing.T) {
@@ -15,7 +15,7 @@ func Test_SnakeGoingLeft(t *testing.T) {
 
 		snake := Snake{
 			Body: &snakeBody,
-			Id:   randSeq(10),
+			Id:   RandSeq(10),
 		}
 
 		// snake.Print()
@@ -37,7 +37,7 @@ func Test_SnakeGoingLeft(t *testing.T) {
 
 		snake := Snake{
 			Body: &snakeBody,
-			Id:   randSeq(10),
+			Id:   RandSeq(10),
 		}
 
 		// snake.Print()
@@ -59,7 +59,7 @@ func Test_SnakeGoingLeft(t *testing.T) {
 
 		snake := Snake{
 			Body: &snakeBody,
-			Id:   randSeq(10),
+			Id:   RandSeq(10),
 		}
 
 		// snake.Print()
@@ -81,7 +81,7 @@ func Test_SnakeGoingLeft(t *testing.T) {
 
 		snake := Snake{
 			Body: &snakeBody,
-			Id:   randSeq(10),
+			Id:   RandSeq(10),
 		}
 
 		// snake.Print()
@@ -105,7 +105,7 @@ func Test_SnakeGoingRight(t *testing.T) {
 
 		snake := Snake{
 			Body: &snakeBody,
-			Id:   randSeq(10),
+			Id:   RandSeq(10),
 		}
 
 		// snake.Print()
@@ -127,7 +127,7 @@ func Test_SnakeGoingRight(t *testing.T) {
 
 		snake := Snake{
 			Body: &snakeBody,
-			Id:   randSeq(10),
+			Id:   RandSeq(10),
 		}
 
 		// snake.Print()
@@ -149,7 +149,7 @@ func Test_SnakeGoingRight(t *testing.T) {
 
 		snake := Snake{
 			Body: &snakeBody,
-			Id:   randSeq(10),
+			Id:   RandSeq(10),
 		}
 
 		// snake.Print()
@@ -171,7 +171,7 @@ func Test_SnakeGoingRight(t *testing.T) {
 
 		snake := Snake{
 			Body: &snakeBody,
-			Id:   randSeq(10),
+			Id:   RandSeq(10),
 		}
 
 		// snake.Print()
@@ -195,7 +195,7 @@ func Test_SnakeGoingUp(t *testing.T) {
 
 		snake := Snake{
 			Body: &snakeBody,
-			Id:   randSeq(10),
+			Id:   RandSeq(10),
 		}
 
 		// snake.Print()
@@ -217,7 +217,7 @@ func Test_SnakeGoingUp(t *testing.T) {
 
 		snake := Snake{
 			Body: &snakeBody,
-			Id:   randSeq(10),
+			Id:   RandSeq(10),
 		}
 
 		// snake.Print()
@@ -239,7 +239,7 @@ func Test_SnakeGoingUp(t *testing.T) {
 
 		snake := Snake{
 			Body: &snakeBody,
-			Id:   randSeq(10),
+			Id:   RandSeq(10),
 		}
 
 		// snake.Print()
@@ -261,7 +261,7 @@ func Test_SnakeGoingUp(t *testing.T) {
 
 		snake := Snake{
 			Body: &snakeBody,
-			Id:   randSeq(10),
+			Id:   RandSeq(10),
 		}
 
 		// snake.Print()
@@ -285,7 +285,7 @@ func Test_SnakeGoingDown(t *testing.T) {
 
 		snake := Snake{
 			Body: &snakeBody,
-			Id:   randSeq(10),
+			Id:   RandSeq(10),
 		}
 
 		// snake.Print()
@@ -307,7 +307,7 @@ func Test_SnakeGoingDown(t *testing.T) {
 
 		snake := Snake{
 			Body: &snakeBody,
-			Id:   randSeq(10),
+			Id:   RandSeq(10),
 		}
 
 		// snake.Print()
@@ -329,7 +329,7 @@ func Test_SnakeGoingDown(t *testing.T) {
 
 		snake := Snake{
 			Body: &snakeBody,
-			Id:   randSeq(10),
+			Id:   RandSeq(10),
 		}
 
 		// snake.Print()
@@ -351,7 +351,7 @@ func Test_SnakeGoingDown(t *testing.T) {
 
 		snake := Snake{
 			Body: &snakeBody,
-			Id:   randSeq(10),
+			Id:   RandSeq(10),
 		}
 
 		// snake.Print()

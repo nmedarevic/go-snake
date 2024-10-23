@@ -8,6 +8,7 @@ import (
 
 	"github.com/a-h/templ"
 	"snakegame.com/http/start"
+	snake "snakegame.com/snake"
 )
 
 type SnakeGameUnit struct {
@@ -92,6 +93,18 @@ func RunServer() {
 
 func main() {
 	fmt.Println("Hello, World!")
+
+	snakeBody := make([]snake.SnakePoint, 0)
+	snakeBody = append(snakeBody, snake.SnakePoint{X: int32(0), Y: int32(0)})
+	snakeBody = append(snakeBody, snake.SnakePoint{X: int32(1), Y: int32(0)})
+	snakeBody = append(snakeBody, snake.SnakePoint{X: int32(2), Y: int32(0)})
+
+	snek := snake.Snake{
+		Body: &snakeBody,
+		Id:   snake.RandSeq(10),
+	}
+
+	snek.Print()
 
 	component := start.Hello("John")
 	// component.Render(context.Background(), os.Stdout)

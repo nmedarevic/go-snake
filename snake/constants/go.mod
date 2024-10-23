@@ -1,3 +1,3 @@
-module "sneakgame.com/constants"
+module "snakegame.com/constants"
 
 go 1.21.4

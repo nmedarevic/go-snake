@@ -23,7 +23,7 @@ func MakeSnakeHeadPointUp(x int32, y int32, length int32) *Snake {
 
 	snake := Snake{
 		Body: &snakeBody,
-		Id:   randSeq(10),
+		Id:   RandSeq(10),
 	}
 
 	return &snake
@@ -31,7 +31,7 @@ func MakeSnakeHeadPointUp(x int32, y int32, length int32) *Snake {
 
 var letters = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
 
-func randSeq(n int) string {
+func RandSeq(n int) string {
 	b := make([]rune, n)
 	for i := range b {
 		b[i] = letters[rand.Intn(len(letters))]
@@ -48,7 +48,7 @@ func MakeSnakePointingUp(x int32, y int32, length int32) *Snake {
 
 	snake := Snake{
 		Body: &snakeBody,
-		Id:   randSeq(10),
+		Id:   RandSeq(10),
 	}
 
 	return &snake
@@ -63,7 +63,7 @@ func MakeSnakePointingRight(x int32, y int32, length int32) *Snake {
 
 	snake := Snake{
 		Body: &snakeBody,
-		Id:   randSeq(10),
+		Id:   RandSeq(10),
 	}
 
 	return &snake

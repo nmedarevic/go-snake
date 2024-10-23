@@ -1,7 +1,7 @@
 package main
 
 import (
-	SnakeCli "sneakgame.com/snake_cli"
+	SnakeCli "snakegame.com/snake_cli"
 )
 
 // func clearScreen() {
