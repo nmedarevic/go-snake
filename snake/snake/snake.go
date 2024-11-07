@@ -6,13 +6,13 @@ import (
 	constants "snakegame.com/constants"
 )
 
-type SnakePoint struct {
+type Point struct {
 	X int32
 	Y int32
 }
 
 type Snake struct {
-	Body *[]SnakePoint
+	Body *[]Point
 	Id   string
 }
 
@@ -24,11 +24,11 @@ type EnclosingRectangle struct {
 }
 
 func (snake *Snake) Move(direction uint8) {
-	var previousPoint *SnakePoint
+	var previousPoint *Point
 
 	for i := 0; i < len(*snake.Body); i++ {
 		if previousPoint != nil {
-			var temporaryPoint = SnakePoint{X: (*snake.Body)[i].X, Y: (*snake.Body)[i].Y}
+			var temporaryPoint = Point{X: (*snake.Body)[i].X, Y: (*snake.Body)[i].Y}
 
 			(*snake.Body)[i].X = previousPoint.X
 			(*snake.Body)[i].Y = previousPoint.Y
@@ -39,7 +39,7 @@ func (snake *Snake) Move(direction uint8) {
 		}
 
 		if previousPoint == nil {
-			previousPoint = &SnakePoint{X: (*snake.Body)[i].X, Y: (*snake.Body)[i].Y}
+			previousPoint = &Point{X: (*snake.Body)[i].X, Y: (*snake.Body)[i].Y}
 		}
 
 		if direction == constants.Down {
@@ -165,9 +165,9 @@ func IsHeadTouchingOtherSnake(snake1 *Snake, snake2 *Snake) bool {
 	var head = (*(*snake1).Body)[0]
 
 	for i := 0; i < len((*(*snake2).Body)); i++ {
-		snakePoint := (*(*snake2).Body)[i]
+		Point := (*(*snake2).Body)[i]
 
-		if head.X == snakePoint.X && head.Y == snakePoint.Y {
+		if head.X == Point.X && head.Y == Point.Y {
 			return true
 		}
 	}
@@ -179,9 +179,9 @@ func HandleSnakeContact(snake1 *Snake, snake2 *Snake) {
 	var head = (*(*snake1).Body)[0]
 
 	for i := 0; i < len((*(*snake2).Body)); i++ {
-		snakePoint := (*(*snake2).Body)[i]
+		Point := (*(*snake2).Body)[i]
 
-		if head.X == snakePoint.X && head.Y == snakePoint.Y {
+		if head.X == Point.X && head.Y == Point.Y {
 			*((*snake2).Body) = (*(*snake2).Body)[0:i]
 			return
 		}
@@ -206,9 +206,9 @@ func AreSnakesTouching(snakes [](*Snake)) bool {
 			// make other snake smaller
 			// var shouldDelete = false
 			for i := 0; i < len((*(*snake).Body)); i++ {
-				snakePoint := (*(*snake).Body)[i]
+				Point := (*(*snake).Body)[i]
 
-				if head.X == snakePoint.X && head.Y == snakePoint.Y {
+				if head.X == Point.X && head.Y == Point.Y {
 					return true
 				}
 			}

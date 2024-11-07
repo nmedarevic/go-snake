@@ -8,10 +8,10 @@ import (
 
 func Test_SnakeGoingLeft(t *testing.T) {
 	t.Run("Should move the head down by pressing Down", func(t *testing.T) {
-		snakeBody := make([]SnakePoint, 0)
-		snakeBody = append(snakeBody, SnakePoint{X: int32(0), Y: int32(0)})
-		snakeBody = append(snakeBody, SnakePoint{X: int32(1), Y: int32(0)})
-		snakeBody = append(snakeBody, SnakePoint{X: int32(2), Y: int32(0)})
+		snakeBody := make([]Point, 0)
+		snakeBody = append(snakeBody, Point{X: int32(0), Y: int32(0)})
+		snakeBody = append(snakeBody, Point{X: int32(1), Y: int32(0)})
+		snakeBody = append(snakeBody, Point{X: int32(2), Y: int32(0)})
 
 		snake := Snake{
 			Body: &snakeBody,
@@ -30,10 +30,10 @@ func Test_SnakeGoingLeft(t *testing.T) {
 	})
 
 	t.Run("Should move the head up by pressing Up", func(t *testing.T) {
-		snakeBody := make([]SnakePoint, 0)
-		snakeBody = append(snakeBody, SnakePoint{X: int32(0), Y: int32(0)})
-		snakeBody = append(snakeBody, SnakePoint{X: int32(1), Y: int32(0)})
-		snakeBody = append(snakeBody, SnakePoint{X: int32(2), Y: int32(0)})
+		snakeBody := make([]Point, 0)
+		snakeBody = append(snakeBody, Point{X: int32(0), Y: int32(0)})
+		snakeBody = append(snakeBody, Point{X: int32(1), Y: int32(0)})
+		snakeBody = append(snakeBody, Point{X: int32(2), Y: int32(0)})
 
 		snake := Snake{
 			Body: &snakeBody,
@@ -52,10 +52,10 @@ func Test_SnakeGoingLeft(t *testing.T) {
 	})
 
 	t.Run("Should not move the head back by pressing Left", func(t *testing.T) {
-		snakeBody := make([]SnakePoint, 0)
-		snakeBody = append(snakeBody, SnakePoint{X: int32(0), Y: int32(0)})
-		snakeBody = append(snakeBody, SnakePoint{X: int32(1), Y: int32(0)})
-		snakeBody = append(snakeBody, SnakePoint{X: int32(2), Y: int32(0)})
+		snakeBody := make([]Point, 0)
+		snakeBody = append(snakeBody, Point{X: int32(0), Y: int32(0)})
+		snakeBody = append(snakeBody, Point{X: int32(1), Y: int32(0)})
+		snakeBody = append(snakeBody, Point{X: int32(2), Y: int32(0)})
 
 		snake := Snake{
 			Body: &snakeBody,
@@ -74,10 +74,10 @@ func Test_SnakeGoingLeft(t *testing.T) {
 	})
 
 	t.Run("Should not move the head forward by pressing Right", func(t *testing.T) {
-		snakeBody := make([]SnakePoint, 0)
-		snakeBody = append(snakeBody, SnakePoint{X: int32(0), Y: int32(0)})
-		snakeBody = append(snakeBody, SnakePoint{X: int32(1), Y: int32(0)})
-		snakeBody = append(snakeBody, SnakePoint{X: int32(2), Y: int32(0)})
+		snakeBody := make([]Point, 0)
+		snakeBody = append(snakeBody, Point{X: int32(0), Y: int32(0)})
+		snakeBody = append(snakeBody, Point{X: int32(1), Y: int32(0)})
+		snakeBody = append(snakeBody, Point{X: int32(2), Y: int32(0)})
 
 		snake := Snake{
 			Body: &snakeBody,
@@ -98,10 +98,10 @@ func Test_SnakeGoingLeft(t *testing.T) {
 
 func Test_SnakeGoingRight(t *testing.T) {
 	t.Run("Should move the head down by pressing Down", func(t *testing.T) {
-		snakeBody := make([]SnakePoint, 0)
-		snakeBody = append(snakeBody, SnakePoint{X: int32(2), Y: int32(0)})
-		snakeBody = append(snakeBody, SnakePoint{X: int32(1), Y: int32(0)})
-		snakeBody = append(snakeBody, SnakePoint{X: int32(0), Y: int32(0)})
+		snakeBody := make([]Point, 0)
+		snakeBody = append(snakeBody, Point{X: int32(2), Y: int32(0)})
+		snakeBody = append(snakeBody, Point{X: int32(1), Y: int32(0)})
+		snakeBody = append(snakeBody, Point{X: int32(0), Y: int32(0)})
 
 		snake := Snake{
 			Body: &snakeBody,
@@ -120,10 +120,10 @@ func Test_SnakeGoingRight(t *testing.T) {
 	})
 
 	t.Run("Should move the head up by pressing Up", func(t *testing.T) {
-		snakeBody := make([]SnakePoint, 0)
-		snakeBody = append(snakeBody, SnakePoint{X: int32(2), Y: int32(0)})
-		snakeBody = append(snakeBody, SnakePoint{X: int32(1), Y: int32(0)})
-		snakeBody = append(snakeBody, SnakePoint{X: int32(0), Y: int32(0)})
+		snakeBody := make([]Point, 0)
+		snakeBody = append(snakeBody, Point{X: int32(2), Y: int32(0)})
+		snakeBody = append(snakeBody, Point{X: int32(1), Y: int32(0)})
+		snakeBody = append(snakeBody, Point{X: int32(0), Y: int32(0)})
 
 		snake := Snake{
 			Body: &snakeBody,
@@ -142,10 +142,10 @@ func Test_SnakeGoingRight(t *testing.T) {
 	})
 
 	t.Run("Should not move the head back by pressing Left", func(t *testing.T) {
-		snakeBody := make([]SnakePoint, 0)
-		snakeBody = append(snakeBody, SnakePoint{X: int32(2), Y: int32(0)})
-		snakeBody = append(snakeBody, SnakePoint{X: int32(1), Y: int32(0)})
-		snakeBody = append(snakeBody, SnakePoint{X: int32(0), Y: int32(0)})
+		snakeBody := make([]Point, 0)
+		snakeBody = append(snakeBody, Point{X: int32(2), Y: int32(0)})
+		snakeBody = append(snakeBody, Point{X: int32(1), Y: int32(0)})
+		snakeBody = append(snakeBody, Point{X: int32(0), Y: int32(0)})
 
 		snake := Snake{
 			Body: &snakeBody,
@@ -164,10 +164,10 @@ func Test_SnakeGoingRight(t *testing.T) {
 	})
 
 	t.Run("Should not move the head forward by pressing Right", func(t *testing.T) {
-		snakeBody := make([]SnakePoint, 0)
-		snakeBody = append(snakeBody, SnakePoint{X: int32(2), Y: int32(0)})
-		snakeBody = append(snakeBody, SnakePoint{X: int32(1), Y: int32(0)})
-		snakeBody = append(snakeBody, SnakePoint{X: int32(0), Y: int32(0)})
+		snakeBody := make([]Point, 0)
+		snakeBody = append(snakeBody, Point{X: int32(2), Y: int32(0)})
+		snakeBody = append(snakeBody, Point{X: int32(1), Y: int32(0)})
+		snakeBody = append(snakeBody, Point{X: int32(0), Y: int32(0)})
 
 		snake := Snake{
 			Body: &snakeBody,
@@ -188,10 +188,10 @@ func Test_SnakeGoingRight(t *testing.T) {
 
 func Test_SnakeGoingUp(t *testing.T) {
 	t.Run("Should move the head down by pressing Down", func(t *testing.T) {
-		snakeBody := make([]SnakePoint, 0)
-		snakeBody = append(snakeBody, SnakePoint{X: int32(0), Y: int32(2)})
-		snakeBody = append(snakeBody, SnakePoint{X: int32(0), Y: int32(1)})
-		snakeBody = append(snakeBody, SnakePoint{X: int32(0), Y: int32(0)})
+		snakeBody := make([]Point, 0)
+		snakeBody = append(snakeBody, Point{X: int32(0), Y: int32(2)})
+		snakeBody = append(snakeBody, Point{X: int32(0), Y: int32(1)})
+		snakeBody = append(snakeBody, Point{X: int32(0), Y: int32(0)})
 
 		snake := Snake{
 			Body: &snakeBody,
@@ -210,10 +210,10 @@ func Test_SnakeGoingUp(t *testing.T) {
 	})
 
 	t.Run("Should move the head up by pressing Up", func(t *testing.T) {
-		snakeBody := make([]SnakePoint, 0)
-		snakeBody = append(snakeBody, SnakePoint{X: int32(0), Y: int32(2)})
-		snakeBody = append(snakeBody, SnakePoint{X: int32(0), Y: int32(1)})
-		snakeBody = append(snakeBody, SnakePoint{X: int32(0), Y: int32(0)})
+		snakeBody := make([]Point, 0)
+		snakeBody = append(snakeBody, Point{X: int32(0), Y: int32(2)})
+		snakeBody = append(snakeBody, Point{X: int32(0), Y: int32(1)})
+		snakeBody = append(snakeBody, Point{X: int32(0), Y: int32(0)})
 
 		snake := Snake{
 			Body: &snakeBody,
@@ -232,10 +232,10 @@ func Test_SnakeGoingUp(t *testing.T) {
 	})
 
 	t.Run("Should not move the head back by pressing Left", func(t *testing.T) {
-		snakeBody := make([]SnakePoint, 0)
-		snakeBody = append(snakeBody, SnakePoint{X: int32(0), Y: int32(2)})
-		snakeBody = append(snakeBody, SnakePoint{X: int32(0), Y: int32(1)})
-		snakeBody = append(snakeBody, SnakePoint{X: int32(0), Y: int32(0)})
+		snakeBody := make([]Point, 0)
+		snakeBody = append(snakeBody, Point{X: int32(0), Y: int32(2)})
+		snakeBody = append(snakeBody, Point{X: int32(0), Y: int32(1)})
+		snakeBody = append(snakeBody, Point{X: int32(0), Y: int32(0)})
 
 		snake := Snake{
 			Body: &snakeBody,
@@ -254,10 +254,10 @@ func Test_SnakeGoingUp(t *testing.T) {
 	})
 
 	t.Run("Should not move the head back by pressing Right", func(t *testing.T) {
-		snakeBody := make([]SnakePoint, 0)
-		snakeBody = append(snakeBody, SnakePoint{X: int32(0), Y: int32(2)})
-		snakeBody = append(snakeBody, SnakePoint{X: int32(0), Y: int32(1)})
-		snakeBody = append(snakeBody, SnakePoint{X: int32(0), Y: int32(0)})
+		snakeBody := make([]Point, 0)
+		snakeBody = append(snakeBody, Point{X: int32(0), Y: int32(2)})
+		snakeBody = append(snakeBody, Point{X: int32(0), Y: int32(1)})
+		snakeBody = append(snakeBody, Point{X: int32(0), Y: int32(0)})
 
 		snake := Snake{
 			Body: &snakeBody,
@@ -278,10 +278,10 @@ func Test_SnakeGoingUp(t *testing.T) {
 
 func Test_SnakeGoingDown(t *testing.T) {
 	t.Run("Should move the head down by pressing Down", func(t *testing.T) {
-		snakeBody := make([]SnakePoint, 0)
-		snakeBody = append(snakeBody, SnakePoint{X: int32(0), Y: int32(0)})
-		snakeBody = append(snakeBody, SnakePoint{X: int32(0), Y: int32(1)})
-		snakeBody = append(snakeBody, SnakePoint{X: int32(0), Y: int32(2)})
+		snakeBody := make([]Point, 0)
+		snakeBody = append(snakeBody, Point{X: int32(0), Y: int32(0)})
+		snakeBody = append(snakeBody, Point{X: int32(0), Y: int32(1)})
+		snakeBody = append(snakeBody, Point{X: int32(0), Y: int32(2)})
 
 		snake := Snake{
 			Body: &snakeBody,
@@ -300,10 +300,10 @@ func Test_SnakeGoingDown(t *testing.T) {
 	})
 
 	t.Run("Should move the head up by pressing Up", func(t *testing.T) {
-		snakeBody := make([]SnakePoint, 0)
-		snakeBody = append(snakeBody, SnakePoint{X: int32(0), Y: int32(0)})
-		snakeBody = append(snakeBody, SnakePoint{X: int32(0), Y: int32(1)})
-		snakeBody = append(snakeBody, SnakePoint{X: int32(0), Y: int32(2)})
+		snakeBody := make([]Point, 0)
+		snakeBody = append(snakeBody, Point{X: int32(0), Y: int32(0)})
+		snakeBody = append(snakeBody, Point{X: int32(0), Y: int32(1)})
+		snakeBody = append(snakeBody, Point{X: int32(0), Y: int32(2)})
 
 		snake := Snake{
 			Body: &snakeBody,
@@ -322,10 +322,10 @@ func Test_SnakeGoingDown(t *testing.T) {
 	})
 
 	t.Run("Should not move the head back by pressing Left", func(t *testing.T) {
-		snakeBody := make([]SnakePoint, 0)
-		snakeBody = append(snakeBody, SnakePoint{X: int32(0), Y: int32(0)})
-		snakeBody = append(snakeBody, SnakePoint{X: int32(0), Y: int32(1)})
-		snakeBody = append(snakeBody, SnakePoint{X: int32(0), Y: int32(2)})
+		snakeBody := make([]Point, 0)
+		snakeBody = append(snakeBody, Point{X: int32(0), Y: int32(0)})
+		snakeBody = append(snakeBody, Point{X: int32(0), Y: int32(1)})
+		snakeBody = append(snakeBody, Point{X: int32(0), Y: int32(2)})
 
 		snake := Snake{
 			Body: &snakeBody,
@@ -344,10 +344,10 @@ func Test_SnakeGoingDown(t *testing.T) {
 	})
 
 	t.Run("Should not move the head back by pressing Right", func(t *testing.T) {
-		snakeBody := make([]SnakePoint, 0)
-		snakeBody = append(snakeBody, SnakePoint{X: int32(0), Y: int32(0)})
-		snakeBody = append(snakeBody, SnakePoint{X: int32(0), Y: int32(1)})
-		snakeBody = append(snakeBody, SnakePoint{X: int32(0), Y: int32(2)})
+		snakeBody := make([]Point, 0)
+		snakeBody = append(snakeBody, Point{X: int32(0), Y: int32(0)})
+		snakeBody = append(snakeBody, Point{X: int32(0), Y: int32(1)})
+		snakeBody = append(snakeBody, Point{X: int32(0), Y: int32(2)})
 
 		snake := Snake{
 			Body: &snakeBody,
@@ -371,7 +371,7 @@ func TestShouldMoveToRightIndependentOfTable(t *testing.T) {
 	var startingY int32 = 5
 	var snakeLength int32 = 5
 
-	snake := MakeSnakePointingUp(startingX, startingY, snakeLength)
+	snake := MakePointingUp(startingX, startingY, snakeLength)
 
 	table := make([][]uint8, 10)
 	for i := range table {
@@ -400,8 +400,8 @@ func TestRenderingTwoSnakes(t *testing.T) {
 	var startingY2 int32 = 3
 	var snakeLength2 int32 = 5
 
-	snake := MakeSnakePointingUp(startingX, startingY, snakeLength)
-	snake2 := MakeSnakePointingRight(startingX2, startingY2, snakeLength2)
+	snake := MakePointingUp(startingX, startingY, snakeLength)
+	snake2 := MakePointingRight(startingX2, startingY2, snakeLength2)
 
 	table := make([][]uint8, 10)
 	for i := range table {

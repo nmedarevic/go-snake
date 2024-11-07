@@ -3,10 +3,10 @@ package snake
 import "math/rand"
 
 func MakeSnake(x int32, y int32, length int32) *Snake {
-	snakeBody := make([]SnakePoint, length)
-	snakeBody[0] = SnakePoint{X: x, Y: y}
-	snakeBody[1] = SnakePoint{X: x, Y: int32(y - 1)}
-	snakeBody[2] = SnakePoint{X: x, Y: int32(y - 2)}
+	snakeBody := make([]Point, length)
+	snakeBody[0] = Point{X: x, Y: y}
+	snakeBody[1] = Point{X: x, Y: int32(y - 1)}
+	snakeBody[2] = Point{X: x, Y: int32(y - 2)}
 
 	snake := Snake{
 		Body: &snakeBody,
@@ -16,9 +16,9 @@ func MakeSnake(x int32, y int32, length int32) *Snake {
 }
 
 func MakeSnakeHeadPointUp(x int32, y int32, length int32) *Snake {
-	snakeBody := make([]SnakePoint, length)
+	snakeBody := make([]Point, length)
 	for i := 0; i < int(length); i++ {
-		snakeBody[i] = SnakePoint{X: x, Y: y + int32(i)}
+		snakeBody[i] = Point{X: x, Y: y + int32(i)}
 	}
 
 	snake := Snake{
@@ -39,11 +39,11 @@ func RandSeq(n int) string {
 	return string(b)
 }
 
-func MakeSnakePointingUp(x int32, y int32, length int32) *Snake {
-	snakeBody := make([]SnakePoint, length)
+func MakePointingUp(x int32, y int32, length int32) *Snake {
+	snakeBody := make([]Point, length)
 
 	for i := 0; i < int(length); i++ {
-		snakeBody[i] = SnakePoint{X: int32(x), Y: int32(y + int32(i))}
+		snakeBody[i] = Point{X: int32(x), Y: int32(y + int32(i))}
 	}
 
 	snake := Snake{
@@ -54,11 +54,11 @@ func MakeSnakePointingUp(x int32, y int32, length int32) *Snake {
 	return &snake
 }
 
-func MakeSnakePointingRight(x int32, y int32, length int32) *Snake {
-	snakeBody := make([]SnakePoint, length)
+func MakePointingRight(x int32, y int32, length int32) *Snake {
+	snakeBody := make([]Point, length)
 
 	for i := 0; i < int(length); i++ {
-		snakeBody[i] = SnakePoint{X: int32(x) + int32(i), Y: int32(y)}
+		snakeBody[i] = Point{X: int32(x) + int32(i), Y: int32(y)}
 	}
 
 	snake := Snake{

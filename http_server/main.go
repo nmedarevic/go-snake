@@ -61,10 +61,10 @@ func RunServer() {
 func main() {
 	fmt.Println("Hello, World!")
 
-	snakeBody := make([]snake.SnakePoint, 0)
-	snakeBody = append(snakeBody, snake.SnakePoint{X: int32(0), Y: int32(0)})
-	snakeBody = append(snakeBody, snake.SnakePoint{X: int32(1), Y: int32(0)})
-	snakeBody = append(snakeBody, snake.SnakePoint{X: int32(2), Y: int32(0)})
+	snakeBody := make([]snake.Point, 0)
+	snakeBody = append(snakeBody, snake.Point{X: int32(0), Y: int32(0)})
+	snakeBody = append(snakeBody, snake.Point{X: int32(1), Y: int32(0)})
+	snakeBody = append(snakeBody, snake.Point{X: int32(2), Y: int32(0)})
 
 	snek := snake.Snake{
 		Body: &snakeBody,

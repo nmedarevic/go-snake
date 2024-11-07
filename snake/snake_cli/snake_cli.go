@@ -49,8 +49,8 @@ func (board *Board) Print(snakes []*snakeModule.Snake) {
 	for y := board.TopLeft.Y; y >= board.BottomRight.Y; y-- {
 		for x := board.TopLeft.X; x <= board.BottomRight.X; x++ {
 			for _, snake := range snakes {
-				for index, snakePoint := range *snake.Body {
-					if x == snakePoint.X && y == snakePoint.Y {
+				for index, Point := range *snake.Body {
+					if x == Point.X && y == Point.Y {
 						if index == 0 {
 							fmt.Print("⏿")
 						} else {
