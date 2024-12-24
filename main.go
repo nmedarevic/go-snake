@@ -60,10 +60,6 @@ func main() {
 		for {
 			lastInput = <-keyboardInputChannel
 			fmt.Println("Key pressed:", lastInput)
-
-			// clearScreen()
-			// snakeModule.MoveSnake(snejk, &table, lastInput)
-			// snakeModule.PrintTable(&table, snejk)
 			renderGame(snejk, &table, lastInput)
 		}
 	}()
