@@ -2,9 +2,9 @@ module snakegame.com
 
 go 1.22.2
 
-replace snakegame.com/constants v0.0.0 => ./constants
+// replace snakegame.com/constants v0.0.0 => ./constants
 
-replace snakegame.com/snake v0.0.0 => ./snake
+// replace snakegame.com/snake v0.0.0 => ./snake
 
 replace snakegame.com/snake_cli v0.0.0 => ./snake_cli
 
